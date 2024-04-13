@@ -1,0 +1,172 @@
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 blue-background text-white" style="height: 100vh">
+      <form>
+        <!--Header-->
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-md-8">
+              <h3>Dansk vejr-forening</h3>
+            </div>
+
+            <div class="col-md-4">
+              <div>Meterologiske Data API</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <div>Data hentning tog: {{ tempData }} ms</div>
+            </div>
+          </div>
+
+          <hr class="small-line" />
+        </div>
+
+        <!--address-->
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <h2>Søg adresse</h2>
+            </div>
+
+            <div class="col-md-12 mb-3">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="indtast adresse her..."
+              />
+            </div>
+            <hr class="small-line" />
+          </div>
+        </div>
+
+        <!--Period-->
+        <div class="container">
+          <!-- Top Row -->
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <h2>Periode</h2>
+            </div>
+          </div>
+
+          <!-- Bottom Row -->
+          <div class="row">
+            <div class="col-md-5 text-center">
+              <input type="date" id="datepicker" [value]="currentDate" />
+            </div>
+            <div class="col-md-2">
+              <hr class="small-line" />
+            </div>
+            <div class="col-md-5 text-center">
+              <input type="date" id="datepicker" [value]="currentDate" />
+            </div>
+          </div>
+
+          <!-- Horizontal Line -->
+          <hr class="small-line" />
+        </div>
+
+        <!--DataSource-->
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <h2>Datakilde</h2>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 text-center">
+              <div>Filserver</div>
+            </div>
+            <div class="col-md-4 d-flex justify-content-center">
+              <div>
+                <div class="form-check form-switch text-center">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    id="flexSwitchCheckChecked"
+                    checked
+                  />
+                  <label
+                    class="form-check-label"
+                    for="flexSwitchCheckChecked"
+                  ></label>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 text-center">
+              <p>Database</p>
+            </div>
+          </div>
+
+          <!-- Horizontal Line -->
+          <hr class="small-line" />
+        </div>
+
+        <!--View-->
+        <div class="container">
+          <!-- Top Row -->
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <h2>Visning</h2>
+            </div>
+          </div>
+
+          <!-- Bottom Row -->
+          <div class="row">
+            <div class="col-md-4 text-center">
+              <p>Liste</p>
+            </div>
+            <div class="col-md-4 d-flex justify-content-center">
+              <div>
+                <div class="form-check form-switch text-center">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    id="flexSwitchCheckChecked"
+                    checked
+                  />
+                  <label
+                    class="form-check-label"
+                    for="flexSwitchCheckChecked"
+                  ></label>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 text-center">
+              <p>Kort</p>
+            </div>
+          </div>
+
+          <!-- Horizontal Line -->
+          <hr class="small-line" />
+        </div>
+
+        <!--Submit-->
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <button
+                class="btn btn-primary rounded border-white"
+                type="submit"
+              >
+                Hent
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-md-9">
+      <h1>Main Content</h1>
+      <p>This is the main content area.</p>
+    </div>
+  </div>
+</div>

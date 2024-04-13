@@ -1,0 +1,24 @@
+.blue-background {
+  background-color: #007bff; /* Blue color from Bootstrap's default theme */
+  color: #fff; /* White text color for better contrast */
+}
+
+.small-line {
+  border-color: #e6e6e6;
+  border-width: 1px;
+  border-style: solid;
+  margin: 10px 0; /* Adjust margin as needed */
+}
+
+/* Increase specificity */
+.form-check.form-switch .form-check-input:checked {
+  background-color: #1cc417; /* Change to desired color */
+  border-color: #1cc417; /* Change to desired color for the switch border */
+}
+
+.form-check.form-switch .form-check-input:not(:checked) {
+  background-color: #1cc417; /* Change to desired color */
+  border-color: #1cc417; /* Change to desired color for the switch border */
+  
+}
+

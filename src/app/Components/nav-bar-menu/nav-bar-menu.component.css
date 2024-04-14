@@ -19,6 +19,30 @@
 .form-check.form-switch .form-check-input:not(:checked) {
   background-color: #1cc417; /* Change to desired color */
   border-color: #1cc417; /* Change to desired color for the switch border */
-  
+
 }
 
+/* Apply underline only to buttons with the button-as-text class and the active class */
+.button-as-text.active {
+  text-decoration: underline;
+}
+
+/* Apply white color to buttons with the button-as-text class and the active class */
+.button-as-text.active-white {
+  color: white;
+}
+
+/* Apply blue color to buttons with the button-as-text class and not the active class */
+.button-as-text:not(.active) {
+  color: blue;
+}
+
+.button-as-text {
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+  cursor: pointer;
+  
+}

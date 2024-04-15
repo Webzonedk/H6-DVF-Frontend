@@ -44,5 +44,9 @@
   font-size: inherit;
   color: inherit;
   cursor: pointer;
-  
+
+}
+
+.custom-text-right {
+  text-align: right;
 }

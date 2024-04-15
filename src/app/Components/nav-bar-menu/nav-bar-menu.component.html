@@ -29,7 +29,7 @@
           <!--navigation-->
           <div class="container">
             <div class="row align-items-center">
-              <div class="col-md-6">
+              <div class="col-md-6 text-center">
                 <!-- Use event binding to call the toggleButton function with the appropriate argument -->
                 <button
                   class="button-as-text active-white"
@@ -41,7 +41,7 @@
                 </button>
               </div>
 
-              <div class="col-md-6">
+              <div class="col-md-6 text-center">
                 <!-- Use event binding to call the toggleButton function with the appropriate argument -->
                 <button
                   class="button-as-text"
@@ -99,7 +99,7 @@
               <div class="col-md-2">
                 <hr class="small-line" />
               </div>
-              <div class="col-md-5 text-center">
+              <div class="col-md-5 text-left">
                 <input
                   type="date"
                   id="datepicker2"
@@ -123,10 +123,10 @@
             </div>
 
             <div class="row">
-              <div class="col-md-4 text-center">
+              <div class="col-md-5 custom-text-right">
                 <div>Filserver</div>
               </div>
-              <div class="col-md-4 d-flex justify-content-center">
+              <div class="col-md-2 d-flex justify-content-center">
                 <div>
                   <div class="form-check form-switch text-center">
                     <input
@@ -145,7 +145,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-4 text-center">
+              <div class="col-md-5 text-left">
                 <p>Database</p>
               </div>
             </div>
@@ -165,10 +165,10 @@
 
             <!-- Bottom Row -->
             <div class="row">
-              <div class="col-md-4 text-center">
+              <div class="col-md-5 custom-text-right">
                 <p>Liste</p>
               </div>
-              <div class="col-md-4 d-flex justify-content-center">
+              <div class="col-md-2 d-flex justify-content-center">
                 <div>
                   <div class="form-check form-switch text-center">
                     <input
@@ -186,7 +186,7 @@
                 </div>
               </div>
 
-              <div class="col-md-4 text-center">
+              <div class="col-md-5 text-left">
                 <p>Kort</p>
               </div>
             </div>
@@ -239,7 +239,7 @@
         <!--navigation-->
         <div class="container">
           <div class="row align-items-center">
-            <div class="col-md-6">
+            <div class="col-md-6 text-center">
               <!-- Use event binding to call the toggleButton function with the appropriate argument -->
               <button
                 class="button-as-text active-white"
@@ -251,7 +251,7 @@
               </button>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6 text-center">
               <!-- Use event binding to call the toggleButton function with the appropriate argument -->
               <button
                 class="button-as-text"
@@ -266,8 +266,8 @@
           <hr class="small-line" />
         </div>
 
-        <form [formGroup]="inputForm" (ngSubmit)="DeleteWeatherData()">
-          <!--delete data-->
+        <!--delete data-->
+        <form [formGroup]="deleteForm" (ngSubmit)="DeleteWeatherData()">
           <div class="container">
             <div class="row">
               <div class="col-md-8 text-center">
@@ -279,12 +279,12 @@
                   <input
                     type="date"
                     class="form-control"
-                    formGroup="inputForm"
-                    formControlName="DeleteToDate"
+                    formGroup="deleteForm"
+                    formControlName="deleteDate"
                   />
                 </div>
                 <div class="row">
-                  <button class="btn btn-primary rounded border-white">
+                  <button type="submit" class="btn btn-primary rounded border-white">
                     slet data
                   </button>
                 </div>
@@ -294,7 +294,10 @@
           </div>
         </form>
 
-        <!--DataSource-->
+
+
+        <!--Restore-->
+
         <div class="container">
           <div class="row">
             <div class="col-md-6 d-flex justify-content-center">
@@ -305,13 +308,14 @@
               </div>
             </div>
             <div class="col-md-6 text-center">
-              <button>Gendan</button>
+              <button type="button" (click)="RestoreData()">Gendan</button>
             </div>
           </div>
 
           <!-- Horizontal Line -->
           <hr class="small-line" />
         </div>
+
 
         <!--Info-->
         <div class="container">

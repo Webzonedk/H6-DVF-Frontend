@@ -4,12 +4,13 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InputModel } from '../../Model/input-model';
 import { CommonModule } from '@angular/common';
 import { RepositoryHandlerService } from '../../Services/repository-handler.service';
+import { DataViewComponent } from '../data-view/data-view.component';
 
 
 @Component({
   selector: 'app-nav-bar-menu',
   standalone: true,
-  imports: [ReactiveFormsModule,CommonModule],
+  imports: [ReactiveFormsModule,CommonModule,DataViewComponent],
   templateUrl: './nav-bar-menu.component.html',
   styleUrl: './nav-bar-menu.component.css',
 })
@@ -44,6 +45,9 @@ export class NavBarMenuComponent {
   GetWeatherData() {
 
      const formData: InputModel = this.inputForm.value;
+
+
+
 
      console.log('Form data:', formData);
   }

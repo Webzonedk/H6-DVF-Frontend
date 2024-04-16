@@ -1,0 +1,23 @@
+
+
+.location{
+  width: 135px;;
+  }
+
+  .weatherdatastyle
+  {
+    width: 75px;
+  }
+
+.header{
+
+  font-weight: bold;
+  color: white;
+  background-color: blue;
+  padding: 5px;
+  word-wrap: break-word;
+}
+
+.nowrap{
+  white-space: nowrap;
+}

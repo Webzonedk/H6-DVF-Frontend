@@ -2,7 +2,7 @@ import { DailyWeatherModel } from './../../Model/daily-weather-model';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InputModel } from '../../Model/input-model';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { RepositoryHandlerService } from '../../Services/repository-handler.service';
 import { DataViewComponent } from '../data-view/data-view.component';
 
@@ -10,7 +10,7 @@ import { DataViewComponent } from '../data-view/data-view.component';
 @Component({
   selector: 'app-nav-bar-menu',
   standalone: true,
-  imports: [ReactiveFormsModule,CommonModule,DataViewComponent],
+  imports: [ReactiveFormsModule,DataViewComponent,NgIf],
   templateUrl: './nav-bar-menu.component.html',
   styleUrl: './nav-bar-menu.component.css',
 })
@@ -18,6 +18,7 @@ export class NavBarMenuComponent {
   tempData: number = 1500;
   currentDate: string;
   Maintainage: boolean = false;
+  VisualToggle: boolean = false;
   inputForm: FormGroup;
   deleteForm: FormGroup;
   weatherDate: DailyWeatherModel[];
@@ -64,7 +65,12 @@ export class NavBarMenuComponent {
   }
 
   toggleButton(isDataButton: boolean) {
-    this.Maintainage = !isDataButton;
     console.log(this.Maintainage);
+    this.Maintainage = !isDataButton;
+  }
+
+  visualToggleChange()  {
+    console.log(this.VisualToggle);
+    this.VisualToggle = !this.VisualToggle;
   }
 }

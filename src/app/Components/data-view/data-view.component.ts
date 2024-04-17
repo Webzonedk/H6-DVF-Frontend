@@ -4,21 +4,21 @@ import { ListElementComponent } from '../list-element/list-element.component';
 import { DailyWeatherModel } from '../../Model/daily-weather-model';
 import { LocationModel } from '../../Model/location-model';
 import { WeatherModel } from '../../Model/weather-model';
-import { CommonModule, NgFor,NgIf } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-data-view',
   standalone: true,
-  imports: [CardElementComponent, ListElementComponent, NgFor,NgIf],
+  imports: [CardElementComponent, ListElementComponent, NgFor, NgIf],
   templateUrl: './data-view.component.html',
   styleUrl: './data-view.component.css',
 })
 export class DataViewComponent {
   tempData: DailyWeatherModel[];
   tempData2: string[] = ['test1', 'test2'];
- @Input() cardviewToogle: boolean;
+  @Input() cardviewToogle: boolean;
   constructor() {
-    // Initialize tempData with one entry of dummy data
+    this.tempData = [];
     const location: LocationModel = {
       Longitude: 123.456, // Sample longitude
       Laditude: 789.012, // Sample latitude
@@ -40,36 +40,13 @@ export class DataViewComponent {
       TimeOfDay: new Date(), // Current date and time
     };
 
-    this.tempData = [
-      {
+    const numberOfEntries = 48; // Number of dummy entries
+    for (let i = 0; i < numberOfEntries; i++) {
+      this.tempData.push({
         WeatherData: weather,
         Locations: location,
-      },
-      // {
-      //   WeatherData: weather,
-      //   Locations: location,
-      // },
-      // {
-      //   WeatherData: weather,
-      //   Locations: location,
-      // },
-      // {
-      //   WeatherData: weather,
-      //   Locations: location,
-      // },
-      // {
-      //   WeatherData: weather,
-      //   Locations: location,
-      // },
-      // {
-      //   WeatherData: weather,
-      //   Locations: location,
-      // },
-      // {
-      //   WeatherData: weather,
-      //   Locations: location,
-      // },
-    ];
+      });
+    }
 
     console.log(this.tempData[0]);
   }

@@ -30,7 +30,7 @@ export class ApiHandlerService {
     });
   }
 
-  public DeleteWeather(deleteDate:Date)
+  public DeleteWeather(deleteDate:Date): Observable<any>
   {
     try {
 

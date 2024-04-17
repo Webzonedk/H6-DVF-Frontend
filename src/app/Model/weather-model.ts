@@ -3,7 +3,6 @@ export interface WeatherModel {
   Rain: number
   WindSpeed: number
   WindDirection: number
-  SunShineDuration: number
   WindGusts: number
   SunElevationAngle: number
   SunAzimuthAngle: number

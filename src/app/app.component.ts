@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { NavBarMenuComponent } from './Components/nav-bar-menu/nav-bar-menu.component';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';

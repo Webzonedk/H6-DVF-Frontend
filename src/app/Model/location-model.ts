@@ -3,4 +3,5 @@ export interface LocationModel {
   Laditude: number
   Address: string
   ZipCode: number
+  City: string
 }

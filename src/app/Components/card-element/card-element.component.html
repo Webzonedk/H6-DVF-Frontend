@@ -1,0 +1,147 @@
+<!-- card.component.html -->
+
+
+  <div class="card">
+
+    <div class="card-header text-center p-2">
+      <h5 class="card-title">
+        {{ dataSource.TimeOfDay | date : "yyyy-MM-dd HH:mm" }}
+      </h5>
+      <h6 class="card-title-minor">{{ locationSource.Address }}, {{locationSource.ZipCode}} {{locationSource.City}}</h6>
+    </div>
+
+    <!--location-->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="label">Bredegrad:</div>
+        </div>
+        <div class="col-md-4">
+          <div class="bodytext">{{ locationSource.Laditude }}</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-8">
+          <div class="label">Længdegrad:</div>
+        </div>
+        <div class="col-md-4">
+          <div class="bodytext">{{ locationSource.Longitude }}</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <hr class="hr"/>
+    </div>
+
+    </div>
+
+    <!--weatherData-->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="label">Temeratur:</div>
+        </div>
+        <div class="col-md-4">
+          <div class="bodytext">{{ dataSource.Temperature }}</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-8">
+          <div class="label">Vind (m/s):</div>
+        </div>
+        <div class="col-md-4">
+          <div class="bodytext">{{ dataSource.WindSpeed }}</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-8">
+          <div class="label">Vind (grader):</div>
+        </div>
+        <div class="col-md-4">
+          <div class="bodytext">{{ dataSource.WindDirection }}</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-8">
+          <div class="label">Vindstød (m/s):</div>
+        </div>
+        <div class="col-md-4">
+          <div class="bodytext">{{ dataSource.WindGusts }}</div>
+        </div>
+      </div>
+
+
+
+
+      <div class="row">
+          <hr class="hr"/>
+      </div>
+
+    </div>
+
+    <div class="container">
+
+      <div class="row">
+        <div class="col-md-8">
+          <div class="label">Luftfugtighed (%):</div>
+        </div>
+        <div class="col-md-4">
+          <div class="bodytext">{{ dataSource.RelativeHumidity }}</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-8">
+          <div class="label">Regn (mm):</div>
+        </div>
+        <div class="col-md-4">
+          <div class="bodytext">{{ dataSource.Rain }}</div>
+        </div>
+      </div>
+
+
+      <div class="row">
+          <hr class="hr"/>
+      </div>
+
+    </div>
+
+    <div class="container">
+
+      <div class="row">
+        <div class="col-md-8">
+          <div class="label">Sol/GTI (W/m2):</div>
+        </div>
+        <div class="col-md-4">
+          <div class="bodytext">{{ dataSource.GTI }}</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-8">
+          <div class="label">Sol højdegrader:</div>
+        </div>
+        <div class="col-md-4">
+          <div class="bodytext">{{ dataSource.SunElevationAngle }}</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-8">
+          <div class="label">Sol Azimuthgrader:</div>
+        </div>
+        <div class="col-md-4">
+          <div class="bodytext">{{ dataSource.SunAzimuthAngle }}</div>
+        </div>
+      </div>
+
+
+
+    </div>
+
+  </div>
+

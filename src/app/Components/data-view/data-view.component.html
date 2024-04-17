@@ -1,1 +1,51 @@
-<p>data-view works!</p>
+<div class="row container">
+  <div>
+    <!--list header-->
+    <div class="container" *ngIf="!cardviewToogle">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="row">
+            <div class="col border  header ">Tidspunkt (zulu)</div>
+            <div class="col border header">Adresse</div>
+          </div>
+        </div>
+
+        <div class="col-md-9">
+          <div class="row">
+            <div class="col border header nowrap ">Breddegrad</div>
+            <div class="col border header nowrap ">Længdegrad</div>
+            <div class="col border header centerText">Temp (C)</div>
+            <div class="col border header centerText">Vind (m/s)</div>
+            <div class="col border header centerText">Vind (grader)</div>
+            <div class="col border header centerText">Vindstød (m/s)</div>
+            <div class="col border header centerText">Luftfugtighed (%)</div>
+            <div class="col border header centerText">Regn (mm)</div>
+            <div class="col border header centerText">Sol/GTI (w/m2)</div>
+            <div class="col border header centerText">Sol højdegrader</div>
+            <div class="col border header centerText">Sol Azimuth grader</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-container *ngFor="let item of tempData">
+      <div class="container" *ngIf="!cardviewToogle">
+        <!-- List view -->
+
+        <app-list-element
+          class="row"
+          [dataSource]="item.WeatherData"
+          [locationSource]="item.Locations"
+        ></app-list-element>
+      </div>
+      <div class="col-md-4 p-2" *ngIf="cardviewToogle">
+        <!-- Card view -->
+
+        <app-card-element
+          [dataSource]="item.WeatherData"
+          [locationSource]="item.Locations"
+        ></app-card-element>
+      </div>
+    </ng-container>
+  </div>
+</div>

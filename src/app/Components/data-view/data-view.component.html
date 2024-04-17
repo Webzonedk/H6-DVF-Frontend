@@ -1,26 +1,30 @@
-<div class="container">
-
-
-  <div class="row">
-
+<div class="row container">
+  <div>
     <!--list header-->
     <div class="container" *ngIf="!cardviewToogle">
-      <div  class="row ">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="row">
+            <div class="col border  header ">Tidspunkt (zulu)</div>
+            <div class="col border header">Adresse</div>
+          </div>
+        </div>
 
-        <div class="col border header nowrap" >Tidspunkt (zulu)</div>
-        <div class="col-2 border header " >Adresse</div>
-        <div class="col-1 border header " >Breddegrad</div>
-        <div class="col-1 border header nowrap">Længdegrad</div>
-        <div class="col border header ">Temp (C)</div>
-        <div class="col border header ">Vind (m/s)</div>
-        <div class="col border header ">Vind (grader)</div>
-        <div class="col border header ">Vindstød (m/s)</div>
-        <div class="col border header ">Luftfugtighed (%)</div>
-        <div class="col border header ">Regn (mm)</div>
-        <div class="col border header ">Sol/GTI (w/m2)</div>
-        <div class="col border header ">Sol højdegrader</div>
-        <div class="col border header ">Sol Azimuth grader</div>
-
+        <div class="col-md-9">
+          <div class="row">
+            <div class="col border header nowrap ">Breddegrad</div>
+            <div class="col border header nowrap ">Længdegrad</div>
+            <div class="col border header centerText">Temp (C)</div>
+            <div class="col border header centerText">Vind (m/s)</div>
+            <div class="col border header centerText">Vind (grader)</div>
+            <div class="col border header centerText">Vindstød (m/s)</div>
+            <div class="col border header centerText">Luftfugtighed (%)</div>
+            <div class="col border header centerText">Regn (mm)</div>
+            <div class="col border header centerText">Sol/GTI (w/m2)</div>
+            <div class="col border header centerText">Sol højdegrader</div>
+            <div class="col border header centerText">Sol Azimuth grader</div>
+          </div>
+        </div>
       </div>
     </div>
 

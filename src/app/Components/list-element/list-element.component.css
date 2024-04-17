@@ -1,9 +1,11 @@
 .textstyle{
 font-size: 11px;
-padding: 10px;
+padding: 5px;
+min-width: 80px;
+
 }
 
-.location{
+.nowrapping{
 
 white-space: nowrap;
 }

@@ -1,23 +1,26 @@
 
 
-.location{
-  width: 135px;;
-  }
 
-  .weatherdatastyle
-  {
-    width: 75px;
-  }
+
+
 
 .header{
 
-  font-weight: bold;
+  font-size: 13px;
   color: white;
   background-color: blue;
   padding: 5px;
-  word-wrap: break-word;
+
+  min-width: 50px;
+  min-height: 55px;
 }
 
 .nowrap{
   white-space: nowrap;
+}
+
+.centerText{
+  text-align: center;
+  align-items: center;
+  justify-content: center;
 }

@@ -1,12 +1,12 @@
 /* card.component.css */
 .card {
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 10px;
 
 /* width: 300px; */
-  /* margin: 20px; */
+  margin: 2px;
   background-color: #fff;
-  max-width: fit-content;
+  max-width: 100%;
 
   /* height: 280px; */
 }

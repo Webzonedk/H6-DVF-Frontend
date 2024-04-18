@@ -24,3 +24,10 @@
   align-items: center;
   justify-content: center;
 }
+
+
+
+.scroll{
+  overflow-y: auto;
+  max-height:100vh;
+}

@@ -1,6 +1,31 @@
-<div class="row container ">
+<div class="row container-fluid">
   <!--list header-->
-  <div class="container" *ngIf="!cardviewToogle">
+
+  <div class="container  colorscheme ">
+    <div class="row">
+      <div class="col">
+        <div class="row p-1">
+          <div class="col meta-font">
+            <div class="row p-1"><h6>Datahentning tog: 1523ms</h6> </div>
+            <div class="row p-1 "><h6>Hentet data: 512 mb</h6></div>
+          </div>
+          <div class="col-1 verticalLineContainer">
+            <div class="verticalLine"></div>
+          </div>
+          <div class="col meta-font text-left">
+            <div class="row p-1 "><h6>Ram brugt: 4800 mb</h6> </div>
+            <div class="row p-1 "><h6>Hentet data: 512 mb</h6></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2 meta-font">
+        <h2>MetaData</h2>
+      </div>
+      <div class="col"></div>
+    </div>
+  </div>
+
+  <div class="container colorscheme" *ngIf="!cardviewToogle">
     <div class="row">
       <div class="col-md-3">
         <div class="row">
@@ -28,25 +53,35 @@
   </div>
 
   <div class="container scroll" *ngIf="!cardviewToogle">
-    <ng-container *ngFor="let item of tempData">
-      <!-- List view -->
 
-      <app-list-element
-        class="row"
-        [dataSource]="item.WeatherData"
-        [locationSource]="item.Locations"
-      ></app-list-element>
+    <ng-container *ngFor="let locationData of tempData">
+
+      <div>{{locationData}}</div>
+      <ng-container *ngFor="let item of location.WeatherData">
+        <!-- List view -->
+
+        <!-- <app-list-element
+          class="row"
+          [dataSource]="item"
+          [locationSource]="item.Locations"
+        ></app-list-element> -->
+
+      </ng-container>
+
     </ng-container>
+
+
   </div>
 
   <div class="container scroll" *ngIf="cardviewToogle">
-    <div class="row">
-      <ng-container *ngFor="let item of tempData">
 
 
+
+    <div class="row cardAlign">
+      <ng-container class="" *ngFor="let item of tempData">
         <!-- card view -->
         <app-card-element
-          class="col"
+          class="col p-1"
           [dataSource]="item.WeatherData"
           [locationSource]="item.Locations"
         ></app-card-element>

@@ -8,7 +8,7 @@
 
   font-size: 13px;
   color: white;
-  background-color: blue;
+
   padding: 5px;
 
   min-width: 50px;
@@ -29,5 +29,31 @@
 
 .scroll{
   overflow-y: auto;
-  max-height:100vh;
+  max-height:85vh;
+}
+
+.metadata{
+  height: 100px;
+}
+
+.meta-font
+{
+  color: white;
+  text-wrap: nowrap;
+}
+
+.verticalLineContainer {
+  display: flex; /* Use flexbox */
+  align-items: center; /* Align items vertically */
+  /* padding: auto; */
+}
+
+.verticalLine {
+  border-left: 1px solid rgb(187, 187, 187); /* Adjust color and thickness as needed */
+  height: 80%; /* Set height to 100% to fill container vertically */
+
+}
+
+.cardAlign{
+  margin-left: -15px;
 }

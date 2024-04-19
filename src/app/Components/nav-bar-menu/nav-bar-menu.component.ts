@@ -2,7 +2,7 @@ import { DailyWeatherModel } from './../../Model/daily-weather-model';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InputModel } from '../../Model/input-model';
-import { CommonModule, NgIf } from '@angular/common';
+import { CommonModule, NgIf, formatDate } from '@angular/common';
 import { RepositoryHandlerService } from '../../Services/repository-handler.service';
 import { DataViewComponent } from '../data-view/data-view.component';
 
@@ -17,7 +17,8 @@ export class NavBarMenuComponent {
   tempData: number = 1500;
   currentDate: string;
   Maintainage: boolean = false;
-  VisualToggle: boolean = true;
+  VisualToggle: boolean = false;
+  LazyloadToggle: boolean;
   inputForm: FormGroup;
   deleteForm: FormGroup;
   weatherDate: DailyWeatherModel[];
@@ -30,11 +31,13 @@ export class NavBarMenuComponent {
 
   ngOnInit(): void {
     // Initialize the form group based on the InputModel interface
+    this.currentDate = formatDate(new Date(), 'yyyy/MM/dd', 'en');
     this.inputForm = this.fb.group({
       Address: [''],
-      FromDate: [new Date()],
-      ToDate: [new Date()],
+      FromDate: [new Date().toISOString().substring(0,10)],
+      ToDate: [new Date().toISOString().substring(0,10)],
       DataSource: [false],
+      numChunks: 5,
     });
 
     this.deleteForm = this.fb.group({
@@ -48,8 +51,29 @@ export class NavBarMenuComponent {
 
   GetWeatherData() {
     const formData: InputModel = this.inputForm.value;
-    this.repository.getWeatherData(formData);
-    console.log('Form data:', formData);
+    const fromDate =this.inputForm.get('FromDate').value;
+    const toDate =this.inputForm.get('ToDate').value;
+    // console.log("from date: ",fromDate, "todate: " ,toDate);
+    // console.log('Form data:', val.TodDate);
+   // console.log('ToDate control value:', this.inputForm.get('ToDate').value);
+    //get all data if address is empty
+    if (formData.Address == '') {
+      this.repository.getDummyLocations(0, 10).subscribe({
+        next: (locations) =>
+          this.repository.getAllweatherData(
+            locations,
+            fromDate,
+            toDate
+          ),
+      });
+    }
+    else
+    {
+      this.repository.getWeatherData(formData);
+    }
+
+
+
   }
 
   DeleteWeatherData() {
@@ -71,5 +95,10 @@ export class NavBarMenuComponent {
   visualToggleChange() {
     console.log(this.VisualToggle);
     this.VisualToggle = !this.VisualToggle;
+  }
+
+  lazyLoadToggleChange() {
+    this.LazyloadToggle = !this.LazyloadToggle;
+    console.log(this.LazyloadToggle);
   }
 }

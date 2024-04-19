@@ -8,5 +8,5 @@ export interface WeatherModel {
   SunAzimuthAngle: number
   GTI: number
   RelativeHumidity: number
-  TimeOfDay: Date
+  TimeOfDay: string
 }

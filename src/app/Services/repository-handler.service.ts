@@ -5,7 +5,7 @@ import { InputModel } from './../Model/input-model';
 import { Injectable } from '@angular/core';
 import { ApiHandlerService } from './api-handler.service';
 
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { MetaDataModel } from '../Model/meta-data-model';
 
 
@@ -13,55 +13,43 @@ import { MetaDataModel } from '../Model/meta-data-model';
   providedIn: 'root',
 })
 export class RepositoryHandlerService {
-  weatherDate: DailyWeatherModel[];
+  //weatherDate: DailyWeatherModel[];
   info$: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  public loadedData$: BehaviorSubject<DailyWeatherModel[]> = new BehaviorSubject<DailyWeatherModel[]>([]);
-
+  public loadedData$: BehaviorSubject<MetaDataModel> = new BehaviorSubject<MetaDataModel>(null);
+  private RunCleanupMethodSubject: Subject<void> = new Subject<void>();
+  CleanupMethodObservable$: Observable<void> = this.RunCleanupMethodSubject.asObservable();
+  ChunkAmount: number;
+  userInput: InputModel;
   constructor(private api: ApiHandlerService) {}
 
-  public getAllweatherData(
-    locations: string[],
-    fromDate: string,
-    toDate: string
-  ): Observable<any> {
-    console.log('getting all weather data');
-    try {
-      console.log('to date: ', toDate, 'from date: ', fromDate);
-
-      const response: any = this.api.getAllWeatherData(
-        locations,
-        fromDate,
-        toDate
-      );
-
-      // const dailyWeatherArray: DailyWeatherModel[] = response.dailyWeather.map((item: any) => ({
-      //   WeatherData: item.weatherData as WeatherModel,
-      //   Locations: item.locations as LocationModel
-      // }));
-
-      return response;
-    } catch (error) {
-      console.error('Error fetching weather data:', error);
-    }
+  returnUserInput(newlocations: any)
+  {
+     this.userInput.Coordinates = newlocations;
+    return this.userInput;
   }
 
-  subcribeToweatherData():Observable<DailyWeatherModel[]>
+  subcribeToweatherData():Observable<MetaDataModel>
   {
-    console.log("emiting");
+
     return this.loadedData$.asObservable();
+  }
+
+  RunCleanup() {
+    this.RunCleanupMethodSubject.next();
   }
 
   public getWeatherData(inputData: InputModel) {
     try {
       this.api.GetWeatherData(inputData).subscribe({
         next: (data) => {
-          // Map each item in the received data array to the corresponding models
-          const mappedData = data.map((item: any) => {
 
 
-            const data = item.weatherData.map((weatherInfo) =>{
 
-              console.log("inside method: ",weatherInfo)
+
+
+            const data2 = data.weatherData.map((weatherInfo) =>{
+
+
 
               const weatherData: WeatherModel = {
                 Temperature: weatherInfo.temperature,
@@ -73,32 +61,33 @@ export class RepositoryHandlerService {
                 SunAzimuthAngle: weatherInfo.sunAzimuthAngle,
                 GTI: weatherInfo.gti,
                 RelativeHumidity: weatherInfo.relativeHumidity,
-                TimeOfDay: weatherInfo.dateAndTime // Assuming you want to use DateAndTime as TimeOfDay
+                DateandTime: weatherInfo.dateAndTime, // Assuming you want to use DateAndTime as TimeOfDay
+                Address: weatherInfo.address,
+                Latitude: weatherInfo.latitude,
+                Longitude: weatherInfo.longitude
               };
               return weatherData;
             })
 
-            const firstElement = item.weatherData[0];
-            // console.log("weatherdata: " ,data);
 
 
-            const location: LocationModel = {
-              Longitude: firstElement.longitude,
-              Laditude: firstElement.latitude,
-              Address: firstElement.address,
 
-            };
-            console.log("first element: ",data);
-           const dailyweatherData: DailyWeatherModel ={
-            Locations: location,
-            WeatherData: data as WeatherModel[]
+
+
+
+           const metaData: MetaDataModel={
+            DataAmount: data.dataAmount,
+            DataCollectedTime: data.dataCollectedTime,
+            RamUsage: data.ramUsage,
+            CPUUsage: data.cpuUsage,
+            Dailyweather: data2
            };
 
-            return dailyweatherData;
-          });
 
+
+          console.log(metaData)
           // Emit the mapped data to subscribers
-          this.loadedData$.next(mappedData);
+          this.loadedData$.next(metaData);
 
       }});
     } catch (error) {
@@ -106,10 +95,11 @@ export class RepositoryHandlerService {
     }
   }
 
-  deleteResource(toDate: Date) {
+  deleteData(toDate: Date) {
     this.api.DeleteWeather(toDate).subscribe({
       next: (response) => {
-        if (response.status >= 200) {
+        console.log(response);
+        if (response.statusCode >= 200) {
           this.info$.next('data successfuldt slettet');
         }
       },
@@ -124,7 +114,7 @@ export class RepositoryHandlerService {
     const resourceId = 123;
     this.api.RestoreData().subscribe({
       next: (response) => {
-        if (response.status >= 200) {
+        if (response.statusCode >= 200) {
           this.info$.next('data successfuldt genoprettet');
         }
       },
@@ -135,42 +125,14 @@ export class RepositoryHandlerService {
     });
   }
 
-  getDummyLocations(fromIndex: number, toIndex: number): Observable<any> {
+  getLocations(fromIndex: number, toIndex: number): Observable<any> {
     console.log('calling');
     return this.api.GetLocations(fromIndex, toIndex);
   }
 
-  public async getLocations(
-    fromIndex: number,
-    toIndex: number
-  ): Promise<Map<number, any>> {
-    return new Promise<Map<number, any>>((resolve, reject) => {
-      this.api.GetLocations(fromIndex, toIndex).subscribe({
-        next: (response) => {
-          if (response.status >= 200 && response.status < 300) {
-            // Assuming response.body is the JSON array returned by the API
-            const jsonArray = response.body;
-
-            // Create a map to store the data points
-            const dataMap = new Map<any, any>();
-            console.log(dataMap);
-            // Iterate over the JSON array and populate the map
-            // let iterator:number;
-            // jsonArray.forEach((dataPoint: any) => {
-            //   // Assuming each data point has a unique identifier called 'id'
-            //   dataMap.set(iterator, dataPoint);
-            //   iterator++;
-            // });
-
-            resolve(dataMap);
-          } else {
-            reject(new Error('Failed to fetch data from the API'));
-          }
-        },
-        error: (error) => {
-          reject(error);
-        },
-      });
-    });
+  getTotalLocations(): Observable<any>
+  {
+    return this.api.getLocationCount();
   }
+
 }

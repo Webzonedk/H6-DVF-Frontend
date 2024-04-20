@@ -12,5 +12,5 @@ import { CommonModule } from '@angular/common';
 })
 export class CardElementComponent {
   @Input() dataSource: WeatherModel;
-  @Input() locationSource: LocationModel;
+  // @Input() locationSource: LocationModel;
 }

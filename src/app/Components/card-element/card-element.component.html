@@ -4,7 +4,7 @@
       <!-- <h5 class="card-title card-header ">
         {{ dataSource.TimeOfDay | date : "yyyy-MM-dd HH:mm" }}
       </h5> -->
-      <h6 class="card-title-minor ">{{ locationSource.Address }}</h6>
+      <h6 class="card-title-minor ">{{ dataSource.Address }}</h6>
     </div>
 
     <!--location-->
@@ -14,7 +14,7 @@
           <div class="label">Bredegrad:</div>
         </div>
         <div class="col-md-4">
-          <div class="bodytext">{{ locationSource.Laditude }}</div>
+          <div class="bodytext">{{ dataSource.Latitude }}</div>
         </div>
       </div>
 
@@ -23,7 +23,7 @@
           <div class="label">Længdegrad:</div>
         </div>
         <div class="col-md-4">
-          <div class="bodytext">{{ locationSource.Longitude }}</div>
+          <div class="bodytext">{{ dataSource.Longitude }}</div>
         </div>
       </div>
 

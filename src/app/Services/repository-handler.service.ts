@@ -8,29 +8,27 @@ import { ApiHandlerService } from './api-handler.service';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { MetaDataModel } from '../Model/meta-data-model';
 
-
 @Injectable({
   providedIn: 'root',
 })
 export class RepositoryHandlerService {
   //weatherDate: DailyWeatherModel[];
   info$: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  public loadedData$: BehaviorSubject<MetaDataModel> = new BehaviorSubject<MetaDataModel>(null);
+  public loadedData$: BehaviorSubject<MetaDataModel> =
+    new BehaviorSubject<MetaDataModel>(null);
   private RunCleanupMethodSubject: Subject<void> = new Subject<void>();
-  CleanupMethodObservable$: Observable<void> = this.RunCleanupMethodSubject.asObservable();
+  CleanupMethodObservable$: Observable<void> =
+    this.RunCleanupMethodSubject.asObservable();
   ChunkAmount: number;
   userInput: InputModel;
   constructor(private api: ApiHandlerService) {}
 
-  returnUserInput(newlocations: any)
-  {
-     this.userInput.Coordinates = newlocations;
+  returnUserInput(newlocations: any) {
+    this.userInput.Coordinates = newlocations;
     return this.userInput;
   }
 
-  subcribeToweatherData():Observable<MetaDataModel>
-  {
-
+  subcribeToweatherData(): Observable<MetaDataModel> {
     return this.loadedData$.asObservable();
   }
 
@@ -42,54 +40,38 @@ export class RepositoryHandlerService {
     try {
       this.api.GetWeatherData(inputData).subscribe({
         next: (data) => {
+          const data2 = data.weatherData.map((weatherInfo) => {
+            const weatherData: WeatherModel = {
+              Temperature: weatherInfo.temperature,
+              Rain: weatherInfo.rain,
+              WindSpeed: weatherInfo.windSpeed,
+              WindDirection: weatherInfo.windDirection,
+              WindGusts: weatherInfo.windGusts,
+              SunElevationAngle: weatherInfo.sunElevationAngle,
+              SunAzimuthAngle: weatherInfo.sunAzimuthAngle,
+              GTI: weatherInfo.gti,
+              RelativeHumidity: weatherInfo.relativeHumidity,
+              DateandTime: weatherInfo.dateAndTime, // Assuming you want to use DateAndTime as TimeOfDay
+              Address: weatherInfo.address,
+              Latitude: weatherInfo.latitude,
+              Longitude: weatherInfo.longitude,
+            };
+            return weatherData;
+          });
 
-
-
-
-
-            const data2 = data.weatherData.map((weatherInfo) =>{
-
-
-
-              const weatherData: WeatherModel = {
-                Temperature: weatherInfo.temperature,
-                Rain: weatherInfo.rain,
-                WindSpeed: weatherInfo.windSpeed,
-                WindDirection: weatherInfo.windDirection,
-                WindGusts: weatherInfo.windGusts,
-                SunElevationAngle: weatherInfo.sunElevationAngle,
-                SunAzimuthAngle: weatherInfo.sunAzimuthAngle,
-                GTI: weatherInfo.gti,
-                RelativeHumidity: weatherInfo.relativeHumidity,
-                DateandTime: weatherInfo.dateAndTime, // Assuming you want to use DateAndTime as TimeOfDay
-                Address: weatherInfo.address,
-                Latitude: weatherInfo.latitude,
-                Longitude: weatherInfo.longitude
-              };
-              return weatherData;
-            })
-
-
-
-
-
-
-
-           const metaData: MetaDataModel={
+          const metaData: MetaDataModel = {
             DataAmount: data.dataAmount,
             DataCollectedTime: data.dataCollectedTime,
             RamUsage: data.ramUsage,
             CPUUsage: data.cpuUsage,
-            Dailyweather: data2
-           };
+            Dailyweather: data2,
+          };
 
-
-
-         // console.log(metaData)
+          // console.log(metaData)
           // Emit the mapped data to subscribers
           this.loadedData$.next(metaData);
-
-      }});
+        },
+      });
     } catch (error) {
       console.error('Error fetching weather data:', error);
     }
@@ -111,7 +93,6 @@ export class RepositoryHandlerService {
   }
 
   restoreData() {
-
     this.api.RestoreData().subscribe({
       next: (response) => {
         if (response.statusCode >= 200) {
@@ -126,13 +107,14 @@ export class RepositoryHandlerService {
   }
 
   getLocations(fromIndex: number, toIndex: number): Observable<any> {
-
     return this.api.GetLocations(fromIndex, toIndex);
   }
 
-  getTotalLocations(): Observable<any>
-  {
+  getTotalLocations(): Observable<any> {
     return this.api.getLocationCount();
   }
 
+  getAddresses(input: string): Observable<string[]> {
+    return this.api.GetAdress(input);
+  }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Input } from '@angular/core';
 import { InputModel } from '../Model/input-model';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -76,6 +76,16 @@ export class ApiHandlerService {
     try {
       return this.http.get<any>(
         `${this.dummyUrl}/Maintenance/GetLocationCount`
+      );
+    } catch (error) {
+      console.error('Error deleting weather data:', error);
+    }
+  }
+
+  public GetAdress(input:string): Observable<any> {
+    try {
+      const data = {addressInput: input};
+      return this.http.get<any>(`${this.dummyUrl}/Maintenance/GetAddress`,{params: data}
       );
     } catch (error) {
       console.error('Error deleting weather data:', error);

@@ -2,15 +2,15 @@ import { RepositoryHandlerService } from './../../Services/repository-handler.se
 import { InputModel } from './../../Model/input-model';
 import { DailyWeatherModel } from './../../Model/daily-weather-model';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule, NgIf, formatDate } from '@angular/common';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule, NgForOf, NgIf, formatDate } from '@angular/common';
 
 import { DataViewComponent } from '../data-view/data-view.component';
 
 @Component({
   selector: 'app-nav-bar-menu',
   standalone: true,
-  imports: [ReactiveFormsModule, DataViewComponent, NgIf],
+  imports: [ReactiveFormsModule, DataViewComponent, NgIf,NgForOf],
   templateUrl: './nav-bar-menu.component.html',
   styleUrl: './nav-bar-menu.component.css',
 })
@@ -24,6 +24,11 @@ export class NavBarMenuComponent {
   deleteForm: FormGroup;
   weatherDate: DailyWeatherModel[];
   infoFeedback: string;
+
+  searchControl = new FormControl('');
+  showDropdown = false;
+  options: string[] = []; // Populate this with options from your repository service
+  filteredOptions: string[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -114,4 +119,29 @@ export class NavBarMenuComponent {
         this.infoFeedback = "";
       }
   }
+
+
+  //test out search
+
+  onInput(event: any) {
+
+    console.log("hello");
+
+    const inputValue = (event.target as HTMLInputElement).value.trim();
+
+  // Clear filteredOptions if input is empty
+  if (!inputValue) {
+    this.filteredOptions = [];
+    return;
+  }
+
+    const searchText = event.target.value.toLowerCase();
+   // this.filteredOptions =  console.log("text");
+    this.repository.getAddresses(searchText).subscribe((data) =>{
+      this.filteredOptions = data;
+      console.log(data);
+    });
+  }
+
+
 }

@@ -23,7 +23,7 @@ export class ApiHandlerService {
   }
 
   public GetWeatherData(inputData: InputModel): Observable<any> {
-    console.log('input: ', inputData);
+    //console.log('input: ', inputData);
     let myheaders = new HttpHeaders();
     myheaders.append('Content-Type', 'application/json');
 
@@ -35,8 +35,7 @@ export class ApiHandlerService {
       ToDate: inputData.TodDate,
     };
 
-    // console.log(`${this.dummyUrl}/weatherData/GetWeatherData`);
-    //console.log('https://localhost:7121/WeatherForecast/weatherData/GetWeatherData',{Headers: myheaders,params: parameters});
+
 
     return this.http.get<any>(`${this.dummyUrl}/weatherData/GetWeatherData`, {
       params: parameters,

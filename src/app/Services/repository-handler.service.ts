@@ -85,7 +85,7 @@ export class RepositoryHandlerService {
 
 
 
-          console.log(metaData)
+         // console.log(metaData)
           // Emit the mapped data to subscribers
           this.loadedData$.next(metaData);
 
@@ -98,7 +98,7 @@ export class RepositoryHandlerService {
   deleteData(toDate: Date) {
     this.api.DeleteWeather(toDate).subscribe({
       next: (response) => {
-        console.log(response);
+        //console.log(response);
         if (response.statusCode >= 200) {
           this.info$.next('data successfuldt slettet');
         }
@@ -111,7 +111,7 @@ export class RepositoryHandlerService {
   }
 
   restoreData() {
-    const resourceId = 123;
+
     this.api.RestoreData().subscribe({
       next: (response) => {
         if (response.statusCode >= 200) {
@@ -126,7 +126,7 @@ export class RepositoryHandlerService {
   }
 
   getLocations(fromIndex: number, toIndex: number): Observable<any> {
-    console.log('calling');
+
     return this.api.GetLocations(fromIndex, toIndex);
   }
 

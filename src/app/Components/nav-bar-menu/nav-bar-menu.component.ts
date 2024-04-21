@@ -91,7 +91,7 @@ export class NavBarMenuComponent {
   }
 
   toggleButton(isDataButton: boolean) {
-    console.log(this.Maintainage);
+   // console.log(this.Maintainage);
     this.Maintainage = !isDataButton;
     this.resetFedBack();
   }
@@ -104,7 +104,7 @@ export class NavBarMenuComponent {
 
   lazyLoadToggleChange() {
     this.LazyloadToggle = !this.LazyloadToggle;
-    console.log(this.LazyloadToggle);
+    //console.log(this.LazyloadToggle);
   }
 
   resetFedBack()

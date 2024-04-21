@@ -19,7 +19,8 @@ export class DataViewComponent {
   weatherDateCollection: MetaDataModel;
   fromIndex: number;
   toIndex: number;
-  totalDataPoints;
+  totalDataPoints: number = 0;
+
   @ViewChild('uiElement', { static: false }) public element: ElementRef;
 
   @Input() cardviewToogle: boolean;
@@ -31,45 +32,44 @@ export class DataViewComponent {
       this.clearData();
     });
 
-    this.fetchData(this.fromIndex, this.toIndex);
+    // this.fetchData(this.fromIndex, this.toIndex);
 
     this.repoService.subcribeToweatherData().subscribe((data) => {
       if (data != null) {
+        this.SetTotalDataPoints();
         if (this.weatherDateCollection == null) {
           this.weatherDateCollection = data;
-          this.repoService.getTotalLocations().subscribe((value: number) => {
-            this.totalDataPoints = value;
-          });
-          this.fromIndex = this.repoService.ChunkAmount + 1;
-          this.toIndex = this.fromIndex + this.repoService.ChunkAmount - 1;
 
-          console.log(
-            'first data: ',
-            this.totalDataPoints,
-            ' fromIndex: ',
-            this.fromIndex,
-            ' toIndex: ',
-            this.toIndex,
-            'chunk amount: ',
-            this.repoService.ChunkAmount
-          );
+
+          // console.log(
+          //   'first data: ',
+          //   this.totalDataPoints,
+          //   ' fromIndex: ',
+          //   this.fromIndex,
+          //   ' toIndex: ',
+          //   this.toIndex,
+          //   'chunk amount: ',
+          //   this.repoService.ChunkAmount
+          // );
         } else {
           this.weatherDateCollection.Dailyweather = [
             ...this.weatherDateCollection.Dailyweather,
             ...data.Dailyweather,
           ];
 
-          console.log('added data ', this.fromIndex);
-          console.log(
-            'second data: ',
-            this.totalDataPoints,
-            ' fromIndex: ',
-            this.fromIndex,
-            ' toIndex: ',
-            this.toIndex
-          );
+          this.RemoveOldData();
+        console.log("total datapoints: ",this.weatherDateCollection.Dailyweather.length, "of: ",this.totalDataPoints);
+
+         // console.log('added data ', this.fromIndex);
+          // console.log(
+          //   'second data: ',
+          //   this.totalDataPoints,
+          //   ' fromIndex: ',
+          //   this.fromIndex,
+          //   ' toIndex: ',
+          //   this.toIndex
+          // );
         }
-      } else {
       }
     });
   }
@@ -127,7 +127,7 @@ export class DataViewComponent {
           this.repoService.getWeatherData(
             this.repoService.returnUserInput(locations)
           );
-          console.log('getting data');
+          //console.log('getting data');
           // this.weatherDateCollection.Dailyweather = [...this.weatherDateCollection.Dailyweather,...response.Dailyweather];
         },
 
@@ -159,28 +159,54 @@ export class DataViewComponent {
       totalScrolled === scrollHeight &&
       this.weatherDateCollection.Dailyweather.length < this.totalDataPoints
     ) {
-      console.log('this wroks', this.fromIndex);
+
       this.fetchData(this.fromIndex, this.toIndex);
       this.fromIndex += this.repoService.ChunkAmount;
       this.toIndex = this.fromIndex + this.repoService.ChunkAmount - 1;
     }
   }
 
-  clearData() {
+  SetTotalDataPoints() {
+    //set total data being lazy loaded
+   // console.log(this.totalDataPoints);
+    if (this.totalDataPoints == 0) {
+      this.repoService.getTotalLocations().subscribe((value: number) => {
+        this.totalDataPoints = value;
+       // console.log('first time running collection');
+        this.fromIndex = this.repoService.ChunkAmount + 1;
+          this.toIndex = this.fromIndex + this.repoService.ChunkAmount - 1;
+      });
+    }
+  }
 
-    if(this.weatherDateCollection != null)
+  RemoveOldData()
+  {
+    if(this.weatherDateCollection.Dailyweather != null)
       {
-        if (this.weatherDateCollection.Dailyweather.length > 0) {
-          this.weatherDateCollection.Dailyweather = [];
-          this.weatherDateCollection.CPUUsage = 0;
-          this.weatherDateCollection.DataAmount = 0;
-          this.weatherDateCollection.DataCollectedTime = 0;
-          this.weatherDateCollection.RamUsage = 0;
-          this.fromIndex =0;
-          this.toIndex = 0;
-          this.totalDataPoints =0;
-        }
+        if(this.weatherDateCollection.Dailyweather.length > 5000)
+          {
+            console.log("removing data");
+            this.weatherDateCollection.Dailyweather.splice(0,1000);
+          }
+      }
+  }
+
+  clearData() {
+    if (this.weatherDateCollection != null) {
+      if (this.weatherDateCollection.Dailyweather == null) {
+        return;
       }
 
+      if (this.weatherDateCollection.Dailyweather.length > 0) {
+        this.weatherDateCollection.Dailyweather = [];
+        this.weatherDateCollection.CPUUsage = 0;
+        this.weatherDateCollection.DataAmount = 0;
+        this.weatherDateCollection.DataCollectedTime = 0;
+        this.weatherDateCollection.RamUsage = 0;
+        this.fromIndex = 0;
+        this.toIndex = 0;
+        this.totalDataPoints = 0;
+      }
+    }
   }
 }

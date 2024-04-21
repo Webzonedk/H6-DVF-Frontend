@@ -1,17 +1,10 @@
-<!-- card.component.html -->
-
-
-
-
-
-
   <div class="card">
 
-    <div class="card-header text-center p-2">
-      <h5 class="card-title">
+    <div class="  text-center p-2 colorscheme">
+      <!-- <h5 class="card-title card-header ">
         {{ dataSource.TimeOfDay | date : "yyyy-MM-dd HH:mm" }}
-      </h5>
-      <h6 class="card-title-minor">{{ locationSource.Address }}, {{locationSource.ZipCode}} {{locationSource.City}}</h6>
+      </h5> -->
+      <h6 class="card-title-minor ">{{ dataSource.Address }}</h6>
     </div>
 
     <!--location-->
@@ -21,7 +14,7 @@
           <div class="label">Bredegrad:</div>
         </div>
         <div class="col-md-4">
-          <div class="bodytext">{{ locationSource.Laditude }}</div>
+          <div class="bodytext">{{ dataSource.Latitude }}</div>
         </div>
       </div>
 
@@ -30,7 +23,7 @@
           <div class="label">Længdegrad:</div>
         </div>
         <div class="col-md-4">
-          <div class="bodytext">{{ locationSource.Longitude }}</div>
+          <div class="bodytext">{{ dataSource.Longitude }}</div>
         </div>
       </div>
 

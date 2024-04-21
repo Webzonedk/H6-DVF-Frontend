@@ -14,36 +14,51 @@
   <div class="col border textstyle ">{{ dataSource.SunAzimuthAngle }}</div>
 </div> -->
 
-
-  <!-- Left Section -->
-  <div class="col-md-3">
-    <div class="row">
-      <!-- First two data points with borders -->
-      <div class=" col border border-dark textstyle">
-        {{ dataSource.TimeOfDay | date : "yyyy-MM-dd HH:mm" }}
-      </div>
-      <div class="col border border-dark textstyle">
-        {{ locationSource.Address }} {{ locationSource.ZipCode }}
-        {{ locationSource.City }}
-      </div>
+<!-- Left Section -->
+<div class="col-md-3">
+  <div class="row">
+    <!-- First two data points with borders -->
+    <div class="col border border-dark textstyle">
+      {{ dataSource.DateandTime | date : "yyyy-MM-dd HH:mm" }}
+    </div>
+    <div class="col border border-dark textstyle">
+      {{ dataSource.Address }}
     </div>
   </div>
+</div>
 
-  <!-- Right Section -->
-  <div class="col-md-9">
-    <!-- Remaining data points with borders -->
-    <div class="row">
-      <div class="col border border-dark textstyle">{{ locationSource.Laditude }}</div>
-      <div class="col border border-dark textstyle">{{ locationSource.Longitude }}</div>
-      <div class="col border border-dark textstyle">{{ dataSource.Temperature }}</div>
-      <div class="col border border-dark textstyle">{{ dataSource.WindSpeed }}</div>
-      <div class="col border border-dark textstyle">{{ dataSource.WindDirection }}</div>
-      <div class="col border border-dark textstyle">{{ dataSource.WindGusts }}</div>
-      <div class="col border border-dark textstyle">{{ dataSource.RelativeHumidity }}</div>
-      <div class="col border border-dark textstyle">{{ dataSource.Rain }}</div>
-      <div class="col border border-dark textstyle">{{ dataSource.GTI }}</div>
-      <div class="col border border-dark textstyle">{{ dataSource.SunElevationAngle }}</div>
-      <div class="col border border-dark textstyle">{{ dataSource.SunAzimuthAngle }}</div>
+<!-- Right Section -->
+<div class="col-md-9">
+  <!-- Remaining data points with borders -->
+  <div class="row">
+    <div class="col border border-dark textstyle">
+      {{ dataSource.Latitude }}
+    </div>
+    <div class="col border border-dark textstyle">
+      {{ dataSource.Longitude }}
+    </div>
+    <div class="col border border-dark textstyle">
+      {{ dataSource.Temperature }}
+    </div>
+    <div class="col border border-dark textstyle">
+      {{ dataSource.WindSpeed }}
+    </div>
+    <div class="col border border-dark textstyle">
+      {{ dataSource.WindDirection }}
+    </div>
+    <div class="col border border-dark textstyle">
+      {{ dataSource.WindGusts }}
+    </div>
+    <div class="col border border-dark textstyle">
+      {{ dataSource.RelativeHumidity }}
+    </div>
+    <div class="col border border-dark textstyle">{{ dataSource.Rain }}</div>
+    <div class="col border border-dark textstyle">{{ dataSource.GTI }}</div>
+    <div class="col border border-dark textstyle">
+      {{ dataSource.SunElevationAngle }}
+    </div>
+    <div class="col border border-dark textstyle">
+      {{ dataSource.SunAzimuthAngle }}
     </div>
   </div>
-
+</div>

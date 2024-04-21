@@ -14,7 +14,7 @@ import { Component, Input } from '@angular/core';
 })
 export class ListElementComponent {
  @Input() dataSource: WeatherModel;
- @Input() locationSource: LocationModel;
+//  @Input() locationSource: LocationModel;
 
 
 }

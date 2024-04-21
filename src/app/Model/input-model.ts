@@ -1,6 +1,6 @@
 export interface InputModel {
-  Address: string;
-  FromDate: Date;
-  Todate: Date;
+  Coordinates: string;
+  FromDate: string;
+  TodDate: string;
   DataSource: boolean;
 }

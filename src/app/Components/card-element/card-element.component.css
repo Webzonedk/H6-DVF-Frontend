@@ -4,16 +4,19 @@
   border-radius: 10px;
 
 /* width: 300px; */
-  margin: 2px;
+  /* margin: 1px; */
+  padding: 4px;
   background-color: #fff;
-  max-width: 100%;
+  max-width: 210px;
 
   /* height: 280px; */
 }
 
+
+
 .card-header {
   font-weight: bold;
-  background-color: rgb(0, 89, 255);
+/* background-color: blue; */
   color: white;
 }
 
@@ -38,4 +41,5 @@ white-space: nowrap;
 .card-title-minor{
   font-size: small;
   white-space: nowrap;
+  color: white;
 }

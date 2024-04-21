@@ -8,9 +8,9 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './card-element.component.html',
-  styleUrl: './card-element.component.css'
+  styleUrl: './card-element.component.css',
 })
 export class CardElementComponent {
   @Input() dataSource: WeatherModel;
-  @Input() locationSource: LocationModel;
+  // @Input() locationSource: LocationModel;
 }

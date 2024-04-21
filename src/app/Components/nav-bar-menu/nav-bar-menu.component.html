@@ -3,7 +3,7 @@
     <!-- Sidebar -->
     <div class="col-md-3">
       <div *ngIf="!Maintainage">
-        <div class="blue-background text-white" style="height: 100vh">
+        <div class="colorscheme text-white" style="height: 100vh">
           <form [formGroup]="inputForm" (ngSubmit)="GetWeatherData()">
             <!--Header-->
             <div class="container">
@@ -17,11 +17,7 @@
                 </div>
               </div>
 
-              <div class="row">
-                <div class="col-md-12 text-center">
-                  <div>Data hentning tog: {{ tempData }} ms</div>
-                </div>
-              </div>
+
 
               <hr class="small-line" />
             </div>
@@ -90,10 +86,10 @@
                 <div class="col-md-5 text-center">
                   <input
                     type="date"
-                    id="datepicker1"
+
                     [formGroup]="inputForm"
                     formControlName="FromDate"
-                    [value]="currentDate"
+                    [defaultValue]="currentDate"
                   />
                 </div>
                 <div class="col-md-2">
@@ -102,10 +98,10 @@
                 <div class="col-md-5 text-left">
                   <input
                     type="date"
-                    id="datepicker2"
+
                     [formGroup]="inputForm"
                     formControlName="ToDate"
-                    [value]="currentDate"
+                    [defaultValue]="currentDate"
                   />
                 </div>
               </div>
@@ -133,7 +129,6 @@
                         class="form-check-input"
                         [formGroup]="inputForm"
                         formControlName="DataSource"
-
                         type="checkbox"
                         role="switch"
                         id="flexSwitchCheckChecked"
@@ -197,12 +192,42 @@
               <hr class="small-line" />
             </div>
 
+            <!--chunks-->
+            <div class="container">
+              <!-- Top Row -->
+              <div class="row">
+                <div class="col-md-12 text-center">
+                  <h5>Indlæs antal lokationer ad gangen</h5>
+                </div>
+              </div>
+
+              <!-- Bottom Row -->
+              <div class="row">
+                <div class="col-4"></div>
+
+                <div class="col">
+                  <input
+                    type="number"
+                    class="form-control"
+                    [formGroup]="inputForm"
+                    placeholder="5"
+                    formControlName="numChunks"
+                  />
+                </div>
+
+                <div class="col-4"></div>
+              </div>
+
+              <!-- Horizontal Line -->
+              <hr class="small-line" />
+            </div>
+
             <!--Submit-->
             <div class="container">
               <div class="row">
                 <div class="col-md-12 text-center">
                   <button
-                    class="btn btn-primary rounded border-white"
+                    class="btn  colorscheme rounded border-white"
                     type="submit"
                   >
                     Hent
@@ -288,7 +313,7 @@
                   <div class="row">
                     <button
                       type="submit"
-                      class="btn btn-primary rounded border-white"
+                      class="btn colorscheme rounded border-white"
                     >
                       slet data
                     </button>
@@ -330,7 +355,7 @@
 
             <!-- Bottom Row -->
             <div class="row text-center">
-              <div>{{infoFeedback}}</div>
+              <div>{{ infoFeedback }}</div>
             </div>
           </div>
         </div>
@@ -338,8 +363,7 @@
     </div>
 
     <!-- Main Content -->
-    <div class="col-md-9">
-
+    <div class="col">
       <app-data-view [cardviewToogle]="VisualToggle"></app-data-view>
     </div>
   </div>

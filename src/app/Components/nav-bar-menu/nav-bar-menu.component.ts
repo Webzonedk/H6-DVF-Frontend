@@ -4,13 +4,13 @@ import { DailyWeatherModel } from './../../Model/daily-weather-model';
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, NgForOf, NgIf, formatDate } from '@angular/common';
-
 import { DataViewComponent } from '../data-view/data-view.component';
+// import { FormsModule } from '@angular/forms'; // Import FormsModule
 
 @Component({
   selector: 'app-nav-bar-menu',
   standalone: true,
-  imports: [ReactiveFormsModule, DataViewComponent, NgIf,NgForOf],
+  imports: [ReactiveFormsModule, DataViewComponent, NgIf,NgForOf ],
   templateUrl: './nav-bar-menu.component.html',
   styleUrl: './nav-bar-menu.component.css',
 })
@@ -101,11 +101,13 @@ export class NavBarMenuComponent {
     this.resetFedBack();
   }
 
-  visualToggleChange() {
+  visualToggleClick() {
 
     this.VisualToggle = !this.VisualToggle;
-
+    console.log(this.VisualToggle);
   }
+
+
 
   lazyLoadToggleChange() {
     this.LazyloadToggle = !this.LazyloadToggle;

@@ -33,7 +33,7 @@ export class DataViewComponent {
     });
 
     // this.fetchData(this.fromIndex, this.toIndex);
-
+    this.generateDummyData();
     this.repoService.subcribeToweatherData().subscribe((data) => {
       if (data != null) {
         this.SetTotalDataPoints();
@@ -75,7 +75,6 @@ export class DataViewComponent {
   }
 
   generateDummyData() {
-    // this.weatherDateCollection = [];
     const location: LocationModel = {
       Longitude: 123.456, // Sample longitude
       Latitude: 789.012, // Sample latitude
@@ -94,8 +93,8 @@ export class DataViewComponent {
         RelativeHumidity: 60, // Sample relative humidity
         DateandTime: new Date().toString(), // Current date and time
         Address: 'Vejrvænget 24, 12345 vejby',
-        Latitude: 95,
-        Longitude: 35,
+        Latitude: "54.91883827",
+        Longitude: "09.89751434",
       },
     ];
 
@@ -106,10 +105,13 @@ export class DataViewComponent {
 
     const metaData: MetaDataModel = {
       CPUUsage: 98,
-      RamUsage: 5000,
-      DataAmount: 1500,
-      DataCollectedTime: 200,
+      RamUsage: "5000 mb",
+      DataAmount: "1500 mb",
+      DataCollectedTime: "200 ms",
       Dailyweather: weatherArray,
+      ConvertionCpuUsage: 100,
+      ConvertionRamUsage: "200 mb",
+      ConvertionTimer: "1 ms"
     };
     this.weatherDateCollection = metaData;
     // const numberOfEntries = 1; // Number of dummy entries
@@ -200,9 +202,9 @@ export class DataViewComponent {
       if (this.weatherDateCollection.Dailyweather.length > 0) {
         this.weatherDateCollection.Dailyweather = [];
         this.weatherDateCollection.CPUUsage = 0;
-        this.weatherDateCollection.DataAmount = 0;
-        this.weatherDateCollection.DataCollectedTime = 0;
-        this.weatherDateCollection.RamUsage = 0;
+        this.weatherDateCollection.DataAmount ="";
+        this.weatherDateCollection.DataCollectedTime = "";
+        this.weatherDateCollection.RamUsage = "";
         this.fromIndex = 0;
         this.toIndex = 0;
         this.totalDataPoints = 0;

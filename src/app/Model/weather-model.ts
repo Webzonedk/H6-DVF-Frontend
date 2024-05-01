@@ -1,7 +1,7 @@
 export interface WeatherModel {
   Address: string
-  Latitude:number
-  Longitude: number
+  Latitude:string
+  Longitude: string
   Temperature: number
   WindSpeed: number
   WindDirection: number

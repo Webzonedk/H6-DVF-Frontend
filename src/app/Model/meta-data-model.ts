@@ -2,10 +2,13 @@ import { DailyWeatherModel } from './daily-weather-model';
 import { WeatherModel } from './weather-model';
 export interface MetaDataModel {
 
-  DataAmount:number;
-  DataCollectedTime: number;
-  RamUsage: number;
+  DataCollectedTime: string;
+  DataAmount:string;
+  RamUsage: string;
   CPUUsage:number;
+  ConvertionTimer: string;
+  ConvertionRamUsage: string;
+  ConvertionCpuUsage: number;
   Dailyweather?: WeatherModel[];
 
 

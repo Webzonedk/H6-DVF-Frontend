@@ -42,28 +42,31 @@ export class RepositoryHandlerService {
         next: (data) => {
           const data2 = data.weatherData.map((weatherInfo) => {
             const weatherData: WeatherModel = {
-              Temperature: weatherInfo.temperature,
-              Rain: weatherInfo.rain,
-              WindSpeed: weatherInfo.windSpeed,
-              WindDirection: weatherInfo.windDirection,
-              WindGusts: weatherInfo.windGusts,
-              SunElevationAngle: weatherInfo.sunElevationAngle,
-              SunAzimuthAngle: weatherInfo.sunAzimuthAngle,
-              GTI: weatherInfo.gti,
-              RelativeHumidity: weatherInfo.relativeHumidity,
-              DateandTime: weatherInfo.dateAndTime, // Assuming you want to use DateAndTime as TimeOfDay
               Address: weatherInfo.address,
               Latitude: weatherInfo.latitude,
               Longitude: weatherInfo.longitude,
+              Temperature: weatherInfo.temperature.toFixed(2),
+              WindSpeed: weatherInfo.windSpeed.toFixed(2),
+              WindDirection: weatherInfo.windDirection.toFixed(2),
+              WindGusts: weatherInfo.windGusts.toFixed(2),
+              RelativeHumidity: weatherInfo.relativeHumidity.toFixed(2),
+              Rain: weatherInfo.rain.toFixed(2),
+              SunElevationAngle: weatherInfo.sunElevationAngle.toFixed(2),
+              SunAzimuthAngle: weatherInfo.sunAzimuthAngle.toFixed(2),
+              GTI: weatherInfo.gti.toFixed(2),
+              DateandTime: weatherInfo.dateAndTime, // Assuming you want to use DateAndTime as TimeOfDay
             };
             return weatherData;
           });
 
           const metaData: MetaDataModel = {
-            DataAmount: data.dataAmount,
-            DataCollectedTime: data.dataCollectedTime,
+            DataCollectedTime: data.fetchDataTimer,
+            DataAmount: data.dataLoadedMB,
             RamUsage: data.ramUsage,
-            CPUUsage: data.cpuUsage,
+            CPUUsage: data.cpuUsage.toFixed(2),
+            ConvertionTimer: data.convertionTimer,
+            ConvertionRamUsage: data.convertionRamUsage,
+            ConvertionCpuUsage: data.convertionCpuUsage.toFixed(2),
             Dailyweather: data2,
           };
 

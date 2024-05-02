@@ -5,3 +5,13 @@
 {
   background-color: #0085FC;
 }
+.btn.colorscheme {
+  background-color: #005CBF; /* Darker shade of blue */
+  border-color: #005CBF;
+  color: #FFFFFF;
+}
+
+.btn.colorscheme:hover {
+  background-color: #007AFF; /* Lighter shade on hover */
+  border-color: #007AFF;
+}

@@ -1,6 +1,5 @@
 import { RepositoryHandlerService } from './../../Services/repository-handler.service';
 import { InputModel } from './../../Model/input-model';
-import { DailyWeatherModel } from './../../Model/daily-weather-model';
 import { Component } from '@angular/core';
 import {
   FormBuilder,
@@ -20,14 +19,12 @@ import { DataViewComponent } from '../data-view/data-view.component';
   styleUrl: './nav-bar-menu.component.css',
 })
 export class NavBarMenuComponent {
-  // tempData: number = 1500;
   currentDate: string;
   Maintainage: boolean = false;
-  VisualToggle: boolean = true;
+  VisualToggle: boolean = false;
   LazyloadToggle: boolean;
   inputForm: FormGroup;
   deleteForm: FormGroup;
-  weatherDate: DailyWeatherModel[];
   infoFeedback: string;
 
   searchControl = new FormControl('');

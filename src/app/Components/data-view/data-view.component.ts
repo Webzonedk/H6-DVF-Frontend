@@ -2,8 +2,6 @@ import { WeatherModel } from './../../Model/weather-model';
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { CardElementComponent } from '../card-element/card-element.component';
 import { ListElementComponent } from '../list-element/list-element.component';
-import { DailyWeatherModel } from '../../Model/daily-weather-model';
-import { LocationModel } from '../../Model/location-model';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { RepositoryHandlerService } from '../../Services/repository-handler.service';
 import { MetaDataModel } from '../../Model/meta-data-model';
@@ -32,8 +30,8 @@ export class DataViewComponent {
       this.clearData();
     });
 
-    // this.fetchData(this.fromIndex, this.toIndex);
-    //this.generateDummyData();
+
+    //this.generateDummyData(100);
     this.repoService.subcribeToweatherData().subscribe((data) => {
       if (data != null) {
         this.SetTotalDataPoints();
@@ -58,34 +56,28 @@ export class DataViewComponent {
   }
 
   //creates dummy data for testing purposes
-  generateDummyData() {
-    const location: LocationModel = {
-      Longitude: 123.456,
-      Latitude: 789.012,
-    };
+  generateDummyData(numItems: number) {
+    const weatherArray: WeatherModel[] = [];
 
-    const weatherArray: WeatherModel[] = [
-      {
-        Temperature: 16.5,
-        Rain: 2.1,
-        WindSpeed: 6.5,
-        WindDirection: 180,
-        WindGusts: 10.6,
-        SunElevationAngle: 45,
-        SunAzimuthAngle: 120,
-        GTI: 122.8,
-        RelativeHumidity: 60,
+    for (let i = 0; i < numItems; i++) {
+      const weatherData: WeatherModel = {
+        Temperature: +(Math.random() * 30).toFixed(2),
+        Rain: +(Math.random() * 10).toFixed(2),
+        WindSpeed: +(Math.random() * 20).toFixed(2),
+        WindDirection: +(Math.random() * 360).toFixed(2),
+        WindGusts: +(Math.random() * 30).toFixed(2),
+        SunElevationAngle: +(Math.random() * 90).toFixed(2),
+        SunAzimuthAngle: +(Math.random() * 360).toFixed(2),
+        GTI: +(Math.random() * 500).toFixed(2),
+        RelativeHumidity: +(Math.random() * 100).toFixed(2),
         DateandTime: new Date().toString(),
         Address: 'Vejrvænget 24, 12345 vejby',
         Latitude: '54.91883827',
         Longitude: '09.89751434',
-      },
-    ];
+      };
 
-    const dailyWeather: DailyWeatherModel = {
-      Locations: location,
-      WeatherData: weatherArray,
-    };
+      weatherArray.push(weatherData);
+    }
 
     const metaData: MetaDataModel = {
       CPUUsage: 98,
@@ -117,7 +109,6 @@ export class DataViewComponent {
 
   //lazy load new data when scrolling
   public OnScroll() {
-
     const element = this.element.nativeElement;
     const totalScrolled =
       Math.round(element.clientHeight + element.scrollTop) + 1;
@@ -135,7 +126,6 @@ export class DataViewComponent {
 
   //set total data being lazy loaded
   SetTotalDataPoints() {
-
     if (this.totalDataPoints == 0) {
       this.repoService.getTotalLocations().subscribe((value: number) => {
         this.totalDataPoints = value;

@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { WeatherModel } from '../../Model/weather-model';
-import { LocationModel } from '../../Model/location-model';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -12,5 +11,4 @@ import { CommonModule } from '@angular/common';
 })
 export class CardElementComponent {
   @Input() dataSource: WeatherModel;
-  // @Input() locationSource: LocationModel;
 }

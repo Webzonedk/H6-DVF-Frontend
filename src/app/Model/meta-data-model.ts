@@ -1,4 +1,3 @@
-import { DailyWeatherModel } from './daily-weather-model';
 import { WeatherModel } from './weather-model';
 export interface MetaDataModel {
 

@@ -1,41 +1,42 @@
-import { LocationModel } from './../Model/location-model';
-import { DailyWeatherModel } from './../Model/daily-weather-model';
 import { WeatherModel } from './../Model/weather-model';
 import { InputModel } from './../Model/input-model';
 import { Injectable } from '@angular/core';
 import { ApiHandlerService } from './api-handler.service';
-
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { MetaDataModel } from '../Model/meta-data-model';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class RepositoryHandlerService {
-  //weatherDate: DailyWeatherModel[];
+
   info$: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  public loadedData$: BehaviorSubject<MetaDataModel> =
-    new BehaviorSubject<MetaDataModel>(null);
+  public loadedData$: BehaviorSubject<MetaDataModel> = new BehaviorSubject<MetaDataModel>(null);
   private RunCleanupMethodSubject: Subject<void> = new Subject<void>();
-  CleanupMethodObservable$: Observable<void> =
-    this.RunCleanupMethodSubject.asObservable();
+  CleanupMethodObservable$: Observable<void> = this.RunCleanupMethodSubject.asObservable();
   ChunkAmount: number;
   userInput: InputModel;
+
   constructor(private api: ApiHandlerService) {}
 
+  //return user input to view data component
   returnUserInput(newlocations: any) {
     this.userInput.Coordinates = newlocations;
     return this.userInput;
   }
 
+  //method to subscribe to new data coming in from the api
   subcribeToweatherData(): Observable<MetaDataModel> {
     return this.loadedData$.asObservable();
   }
 
+  //method triggers a cleanup of data in components subscribed to it
   RunCleanup() {
     this.RunCleanupMethodSubject.next();
   }
 
+  //method calls the api service to get data from api. Returns a mapped model from json
   public getWeatherData(inputData: InputModel) {
     try {
       this.api.GetWeatherData(inputData).subscribe({
@@ -70,7 +71,7 @@ export class RepositoryHandlerService {
             Dailyweather: data2,
           };
 
-          // console.log(metaData)
+
           // Emit the mapped data to subscribers
           this.loadedData$.next(metaData);
         },
@@ -80,10 +81,11 @@ export class RepositoryHandlerService {
     }
   }
 
+  //method calls api service to delete weather data until a specific date
   deleteData(toDate: Date) {
     this.api.DeleteWeather(toDate).subscribe({
       next: (response) => {
-        //console.log(response);
+
         if (response.statusCode >= 200) {
           this.info$.next('data successfuldt slettet');
         }
@@ -95,6 +97,7 @@ export class RepositoryHandlerService {
     });
   }
 
+  //method calls the api service to restore weather data in files and database on server
   restoreData() {
     this.api.RestoreData().subscribe({
       next: (response) => {
@@ -109,14 +112,17 @@ export class RepositoryHandlerService {
     });
   }
 
+  //method returns a list of locations based on id numbers
   getLocations(fromIndex: number, toIndex: number): Observable<any> {
     return this.api.GetLocations(fromIndex, toIndex);
   }
 
+  //method returns total count of locations from the api
   getTotalLocations(): Observable<any> {
     return this.api.getLocationCount();
   }
 
+  //method returns a list of addresses based on a partial typed address
   getAddresses(input: string): Observable<string[]> {
     return this.api.GetAdress(input);
   }

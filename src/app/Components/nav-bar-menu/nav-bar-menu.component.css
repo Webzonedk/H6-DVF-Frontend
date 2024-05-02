@@ -50,3 +50,8 @@
 .custom-text-right {
   text-align: right;
 }
+
+.no-gutters [class*='col-'] {
+  padding-right: 0;
+  padding-left: 0;
+}

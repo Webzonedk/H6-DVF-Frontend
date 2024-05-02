@@ -1,273 +1,23 @@
 <div class="container-fluid">
-  <div class="row">
-    <!-- Sidebar -->
-    <div class="col-md-3">
-      <div *ngIf="!Maintainage">
-        <div class="colorscheme text-white" style="height: 100vh">
-          <form [formGroup]="inputForm" (ngSubmit)="GetWeatherData()">
-            <!--Header-->
-            <div class="container">
-              <div class="row align-items-center">
-                <div class="col-md-8">
-                  <h3>Dansk vejr-forening</h3>
-                </div>
 
-                <div class="col-md-4">
-                  <div>Meterologiske Data API</div>
-                </div>
-              </div>
 
-              <hr class="small-line" />
-            </div>
-
-            <!--navigation-->
-            <div class="container">
-              <div class="row align-items-center">
-                <div class="col-md-6 text-center">
-                  <!-- Use event binding to call the toggleButton function with the appropriate argument -->
-                  <button
-                    class="button-as-text active-white"
-                    type="button"
-                    (click)="toggleButton(true)"
-                    [class.active]="!Maintainage"
-                  >
-                    VejrData
-                  </button>
-                </div>
-
-                <div class="col-md-6 text-center">
-                  <!-- Use event binding to call the toggleButton function with the appropriate argument -->
-                  <button
-                    class="button-as-text"
-                    type="button"
-                    (click)="toggleButton(false)"
-                    [class.active]="Maintainage"
-                  >
-                    Vedligeholdelse
-                  </button>
-                </div>
-              </div>
-              <hr class="small-line" />
-            </div>
-
-            <!--address-->
-            <div class="container">
-              <div class="row">
-                <div class="col-md-12 text-center">
-                  <h2>Søg adresse</h2>
-                </div>
-
-                <div class="col-md-12 mb-3">
-                  <div class="text-center">
-                    <input
-                      type="text"
-                      [formControl]="searchControl"
-                      [formGroup]="inputForm"
-                      formControlName="Address"
-                      list="optionsList"
-                      (input)="onInput($event)"
-                      placeholder="Type to search..."
-                    />
-                    <datalist id="optionsList">
-                      <option
-                        *ngFor="let option of filteredOptions"
-                        [value]="option"
-                      >
-                        {{ option }}
-                      </option>
-                    </datalist>
-                  </div>
-                </div>
-
-                <hr class="small-line" />
-              </div>
-            </div>
-
-            <!--Period-->
-            <div class="container">
-              <!-- Top Row -->
-              <div class="row">
-                <div class="col-md-12 text-center">
-                  <h2>Periode</h2>
-                </div>
-              </div>
-
-              <!-- Bottom Row -->
-              <div class="row">
-                <div class="col-md-5 text-center">
-                  <input
-                    type="date"
-                    [formGroup]="inputForm"
-                    formControlName="FromDate"
-                    [defaultValue]="currentDate"
-                  />
-                </div>
-                <div class="col-md-2">
-                  <hr class="small-line" />
-                </div>
-                <div class="col-md-5 text-left">
-                  <input
-                    type="date"
-                    [formGroup]="inputForm"
-                    formControlName="ToDate"
-                    [defaultValue]="currentDate"
-                  />
-                </div>
-              </div>
-
-              <!-- Horizontal Line -->
-              <hr class="small-line" />
-            </div>
-
-            <!--DataSource-->
-            <div class="container">
-              <div class="row">
-                <div class="col-md-12 text-center">
-                  <h2>Datakilde</h2>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-5 custom-text-right">
-                  <div>Filserver</div>
-                </div>
-                <div class="col-md-2 d-flex justify-content-center">
-                  <div>
-                    <div class="form-check form-switch text-center">
-                      <input
-                        class="form-check-input"
-                        [formGroup]="inputForm"
-                        formControlName="DataSource"
-                        type="checkbox"
-                        role="switch"
-                        id="flexSwitchCheckChecked"
-                        checked
-                      />
-                      <label
-                        class="form-check-label"
-                        for="flexSwitchCheckChecked"
-                      ></label>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-5 text-left">
-                  <p>Database</p>
-                </div>
-              </div>
-
-              <!-- Horizontal Line -->
-              <hr class="small-line" />
-            </div>
-
-            <!--View-->
-            <div class="container">
-              <!-- Top Row -->
-              <div class="row">
-                <div class="col-md-12 text-center">
-                  <h2>Visning</h2>
-                </div>
-              </div>
-
-              <!-- Bottom Row -->
-              <div class="row">
-                <div class="col-md-5 custom-text-right">
-                  <p>Liste</p>
-                </div>
-                <div class="col-md-2 d-flex justify-content-center">
-                  <div>
-                    <div class="form-check form-switch text-center">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        (click)="visualToggleClick()"
-                        role="switch"
-                        id="flexSwitchCheckChecked"
-                        checked
-                      />
-                      <label
-                        class="form-check-label"
-                        for="flexSwitchCheckChecked"
-                      ></label>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-5 text-left">
-                  <p>Kort</p>
-                </div>
-              </div>
-
-              <!-- Horizontal Line -->
-              <hr class="small-line" />
-            </div>
-
-            <!--chunks-->
-            <div class="container">
-              <!-- Top Row -->
-              <div class="row">
-                <div class="col-md-12 text-center">
-                  <h5>Indlæs antal lokationer ad gangen</h5>
-                </div>
-              </div>
-
-              <!-- Bottom Row -->
-              <div class="row">
-                <div class="col-4"></div>
-
-                <div class="col">
-                  <input
-                    type="number"
-                    class="form-control"
-                    [formGroup]="inputForm"
-                    placeholder="5"
-                    formControlName="numChunks"
-                  />
-                </div>
-
-                <div class="col-4"></div>
-              </div>
-
-              <!-- Horizontal Line -->
-              <hr class="small-line" />
-            </div>
-
-            <!--Submit-->
-            <div class="container">
-              <div class="row">
-                <div class="col-md-12 text-center">
-                  <button
-                    class="btn colorscheme rounded border-white"
-                    type="submit"
-                  >
-                    Hent
-                  </button>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-      <!--------------------------------------------------------------------------------Maintainage view-------------------------------------------------------------------------->
-      <div *ngIf="Maintainage">
-        <!-- Add your other content here -->
-        <div class="blue-background text-white" style="height: 100vh">
+<div class="row no-gutters">
+  <!-- Sidebar -->
+  <div class="col-md-3">
+    <div *ngIf="!Maintainage">
+      <div class="colorscheme text-white" style="height: 100vh">
+        <form [formGroup]="inputForm" (ngSubmit)="GetWeatherData()">
           <!--Header-->
-          <div class="container">
+          <div class="container ">
             <div class="row align-items-center">
               <div class="col-md-8">
-                <h3>Dansk vejr-forening</h3>
+                <h3 style="padding-left: 20px;">Dansk vejr-forening</h3>
               </div>
 
               <div class="col-md-4">
                 <div>Meterologiske Data API</div>
               </div>
             </div>
-
-            <!-- <div class="row">
-              <div class="col-md-12 text-center">
-                <div>Data hentning tog: {{ tempData }} ms</div>
-              </div>
-            </div> -->
 
             <hr class="small-line" />
           </div>
@@ -276,7 +26,7 @@
           <div class="container">
             <div class="row align-items-center">
               <div class="col-md-6 text-center">
-                <!-- Use event binding to call the toggleButton function with the appropriate argument -->
+
                 <button
                   class="button-as-text active-white"
                   type="button"
@@ -288,7 +38,7 @@
               </div>
 
               <div class="col-md-6 text-center">
-                <!-- Use event binding to call the toggleButton function with the appropriate argument -->
+
                 <button
                   class="button-as-text"
                   type="button"
@@ -302,57 +52,150 @@
             <hr class="small-line" />
           </div>
 
-          <!--delete data-->
-          <form [formGroup]="deleteForm" (ngSubmit)="DeleteWeatherData()">
-            <div class="container">
-              <div class="row">
-                <div
-                  class="col-md-8 d-flex align-items-center justify-content-center"
-                >
-                  <h6>slet data for denne periode</h6>
-                </div>
-
-                <div class="col-md-4">
-                  <div class="row p-1">
-                    <input
-                      type="date"
-                      class="form-control"
-                      [formGroup]="deleteForm"
-                      formControlName="deleteDate"
-                    />
-                  </div>
-                  <div class="row p-1">
-                    <button
-                      type="submit"
-                      class="btn colorscheme rounded border-white"
-                    >
-                      slet data
-                    </button>
-                  </div>
-                </div>
-                <hr class="small-line" />
-              </div>
-            </div>
-          </form>
-
-          <!--Restore-->
+          <!--address-->
           <div class="container">
             <div class="row">
-              <div class="col-md-6 d-flex justify-content-center">
+              <div class="col-md-12 text-center">
+                <h2>Søg adresse</h2>
+              </div>
+
+              <div class="col-md-12 mb-3">
+                <div class="text-center">
+                  <input
+                    type="text"
+                    [formControl]="searchControl"
+                    [formGroup]="inputForm"
+                    formControlName="Address"
+                    list="optionsList"
+                    (input)="onInput($event)"
+                    placeholder="søg..."
+                  />
+                  <datalist id="optionsList">
+                    <option
+                      *ngFor="let option of filteredOptions"
+                      [value]="option"
+                    >
+                      {{ option }}
+                    </option>
+                  </datalist>
+                </div>
+              </div>
+
+              <hr class="small-line" />
+            </div>
+          </div>
+
+          <!--Period-->
+          <div class="container">
+
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <h2>Periode</h2>
+              </div>
+            </div>
+
+
+            <div class="row p-3">
+              <div class="col-md-5 text-center">
+                <input
+                  type="date"
+                  [formGroup]="inputForm"
+                  formControlName="FromDate"
+                  [defaultValue]="currentDate"
+                />
+              </div>
+              <div class="col-md-2 p-1">
+                <hr class="small-line" />
+              </div>
+              <div class="col-md-5 text-center ">
+                <input
+                  type="date"
+                  [formGroup]="inputForm"
+                  formControlName="ToDate"
+                  [defaultValue]="currentDate"
+                />
+              </div>
+            </div>
+
+
+            <hr class="small-line" />
+          </div>
+
+          <!--DataSource-->
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <h2>Datakilde</h2>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-5 custom-text-right">
+                <div>Filserver</div>
+              </div>
+              <div class="col-md-2 d-flex justify-content-center">
                 <div>
                   <div class="form-check form-switch text-center">
-                    <label class="form-check-label">Gendan slettet data</label>
+                    <input
+                      class="form-check-input"
+                      [formGroup]="inputForm"
+                      formControlName="DataSource"
+                      type="checkbox"
+                      role="switch"
+                      id="flexSwitchCheckChecked"
+                      checked
+                    />
+                    <label
+                      class="form-check-label"
+                      for="flexSwitchCheckChecked"
+                    ></label>
                   </div>
                 </div>
               </div>
-              <div class="col-md-6 d-flex justify-content-center">
-                <button
-                  class="btn colorscheme rounded border-white"
-                  type="button"
-                  (click)="RestoreData()"
-                >
-                  Gendan
-                </button>
+              <div class="col-md-5 text-left">
+                <p>Database</p>
+              </div>
+            </div>
+
+
+            <hr class="small-line" />
+          </div>
+
+          <!--View-->
+          <div class="container">
+            <!-- Top Row -->
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <h2>Visning</h2>
+              </div>
+            </div>
+
+            <!-- Bottom Row -->
+            <div class="row">
+              <div class="col-md-5 custom-text-right">
+                <p>Liste</p>
+              </div>
+              <div class="col-md-2 d-flex justify-content-center">
+                <div>
+                  <div class="form-check form-switch text-center">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      (click)="visualToggleClick()"
+                      role="switch"
+                      id="flexSwitchCheckChecked"
+                      checked
+                    />
+                    <label
+                      class="form-check-label"
+                      for="flexSwitchCheckChecked"
+                    ></label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-5 text-left">
+                <p>Kort</p>
               </div>
             </div>
 
@@ -360,27 +203,184 @@
             <hr class="small-line" />
           </div>
 
-          <!--Info-->
+          <!--chunks-->
           <div class="container">
             <!-- Top Row -->
             <div class="row">
               <div class="col-md-12 text-center">
-                <h3>Info</h3>
+                <h5>Indlæs antal lokationer ad gangen</h5>
               </div>
             </div>
 
             <!-- Bottom Row -->
-            <div class="row text-center">
-              <div>{{ infoFeedback }}</div>
+            <div class="row">
+              <div class="col-4"></div>
+
+              <div class="col">
+                <input
+                  type="number"
+                  class="form-control"
+                  [formGroup]="inputForm"
+                  placeholder="5"
+                  formControlName="numChunks"
+                />
+              </div>
+
+              <div class="col-4"></div>
             </div>
+
+            <!-- Horizontal Line -->
+            <hr class="small-line" />
+          </div>
+
+          <!--Submit-->
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <button
+                  class="btn colorscheme rounded border-white"
+                  type="submit"
+                >
+                  Hent
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!--------------------------------------------------------------------------------Maintainage view-------------------------------------------------------------------------->
+    <div *ngIf="Maintainage">
+      <!-- Add your other content here -->
+      <div class="colorscheme text-white" style="height: 100vh">
+        <!--Header-->
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-md-8">
+              <h3 style="padding-left: 20px;">Dansk vejr-forening</h3>
+            </div>
+
+            <div class="col-md-4">
+              <div>Meterologiske Data API</div>
+            </div>
+          </div>
+
+          <hr class="small-line" />
+        </div>
+
+        <!--navigation-->
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-md-6 text-center">
+              <!-- Use event binding to call the toggleButton function with the appropriate argument -->
+              <button
+                class="button-as-text active-white"
+                type="button"
+                (click)="toggleButton(true)"
+                [class.active]="!Maintainage"
+              >
+                VejrData
+              </button>
+            </div>
+
+            <div class="col-md-6 text-center">
+              <!-- Use event binding to call the toggleButton function with the appropriate argument -->
+              <button
+                class="button-as-text"
+                type="button"
+                (click)="toggleButton(false)"
+                [class.active]="Maintainage"
+              >
+                Vedligeholdelse
+              </button>
+            </div>
+          </div>
+          <hr class="small-line" />
+        </div>
+
+        <!--delete data-->
+        <form [formGroup]="deleteForm" (ngSubmit)="DeleteWeatherData()">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-8 d-flex align-items-center p-3">
+                <h6 class="p-3">Slet data for denne periode</h6>
+              </div>
+              <div class="col-md-4">
+                <div class="row p-3">
+                  <div class="col">
+                    <input
+                      type="date"
+                      class="form-control"
+                      [formGroup]="deleteForm"
+                      formControlName="deleteDate"
+                    />
+                  </div>
+                  <div class="col p-3">
+                    <button
+                      type="submit"
+                      class="btn colorscheme rounded border-white"
+                    >
+                      Slet data
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="small-line" />
+          </div>
+        </form>
+
+        <!--Restore-->
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 d-flex align-items-center">
+              <!-- Changed justify-content-center to justify-content-start -->
+              <div>
+                <div class="form-check form-switch text-center">
+                  <label class="form-check-label">Gendan slettet data</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 d-flex justify-content-start p-3">
+              <!-- Changed justify-content-center to justify-content-start -->
+              <button
+                class="btn colorscheme rounded border-white"
+                type="button"
+                (click)="RestoreData()"
+              >
+                Gendan
+              </button>
+            </div>
+          </div>
+          <!-- Horizontal Line -->
+          <hr class="small-line" />
+        </div>
+
+        <!--Info-->
+        <div class="container">
+          <!-- Top Row -->
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <h3>Info</h3>
+            </div>
+          </div>
+
+          <!-- Bottom Row -->
+          <div class="row text-center">
+            <div>{{ infoFeedback }}</div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- Main Content -->
-    <div class="col">
-      <app-data-view [cardviewToogle]="VisualToggle"></app-data-view>
-    </div>
   </div>
+
+  <!-- Main Content -->
+  <div class="col ">
+    <app-data-view [cardviewToogle]="VisualToggle"></app-data-view>
+
+  </div>
+
+</div>
+
+
 </div>

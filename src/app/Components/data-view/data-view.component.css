@@ -11,7 +11,7 @@
 
   padding: 5px;
 
-  min-width: 50px;
+  min-width: 80px;
   min-height: 55px;
 }
 
@@ -29,7 +29,8 @@
 
 .scroll{
   overflow-y: auto;
-  max-height:85vh;
+  max-height:81vh;
+
 }
 
 .metadata{
@@ -56,4 +57,25 @@
 
 .cardAlign{
   margin-left: -15px;
+}
+
+.no-padding {
+  padding-right: 0;
+  padding-left: 0;
+  margin-left: 0px;
+
+}
+
+
+
+.scrollbar{
+  overflow-y: scroll;
+}
+
+.header-text {
+  font-weight: bold;
+}
+
+.header-value {
+  color: rgb(255, 255, 255);
 }

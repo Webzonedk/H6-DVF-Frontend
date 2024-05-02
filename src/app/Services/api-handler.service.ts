@@ -7,7 +7,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root',
 })
 export class ApiHandlerService {
-  url: string = 'https//api.weblion.dk/';
+  url: string = 'dvf-https//api.weblion.dk/';
   //dummyUrl: string = 'https://localhost:7121/WeatherForecast';
   constructor(private http: HttpClient) {}
 

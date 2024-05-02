@@ -2,7 +2,12 @@ import { RepositoryHandlerService } from './../../Services/repository-handler.se
 import { InputModel } from './../../Model/input-model';
 import { DailyWeatherModel } from './../../Model/daily-weather-model';
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { CommonModule, NgForOf, NgIf, formatDate } from '@angular/common';
 import { DataViewComponent } from '../data-view/data-view.component';
 // import { FormsModule } from '@angular/forms'; // Import FormsModule
@@ -10,12 +15,12 @@ import { DataViewComponent } from '../data-view/data-view.component';
 @Component({
   selector: 'app-nav-bar-menu',
   standalone: true,
-  imports: [ReactiveFormsModule, DataViewComponent, NgIf,NgForOf ],
+  imports: [ReactiveFormsModule, DataViewComponent, NgIf, NgForOf],
   templateUrl: './nav-bar-menu.component.html',
   styleUrl: './nav-bar-menu.component.css',
 })
 export class NavBarMenuComponent {
-  tempData: number = 1500;
+  // tempData: number = 1500;
   currentDate: string;
   Maintainage: boolean = false;
   VisualToggle: boolean = true;
@@ -27,7 +32,7 @@ export class NavBarMenuComponent {
 
   searchControl = new FormControl('');
   showDropdown = false;
-  options: string[] = []; // Populate this with options from your repository service
+  options: string[] = [];
   filteredOptions: string[] = [];
 
   constructor(
@@ -55,9 +60,8 @@ export class NavBarMenuComponent {
     });
   }
 
+  //method calls the service layer for data & removes old data from the view
   GetWeatherData() {
-
-
     const chunkSize = this.inputForm.get('numChunks').value;
     const input: InputModel = {
       FromDate: this.inputForm.get('FromDate').value,
@@ -78,72 +82,60 @@ export class NavBarMenuComponent {
       });
     } else {
       this.repository.getWeatherData(input);
-       this.repository.RunCleanup();
+      this.repository.RunCleanup();
     }
   }
 
+  //calls the repository service to remove old weatherdata in the database & file server
   DeleteWeatherData() {
     const formData: Date = this.deleteForm.value;
     this.repository.deleteData(formData);
     this.repository.RunCleanup();
   }
 
+  //calls the repository service to restore data in the database & file server
   RestoreData() {
     // console.log('restoring data');
     this.repository.restoreData();
     this.repository.RunCleanup();
-
   }
 
+  //method to toggle between data view and maintainage view
   toggleButton(isDataButton: boolean) {
-   // console.log(this.Maintainage);
+    // console.log(this.Maintainage);
     this.Maintainage = !isDataButton;
     this.resetFedBack();
   }
 
+  //method to toggle between showing cards or lists
   visualToggleClick() {
-
     this.VisualToggle = !this.VisualToggle;
     console.log(this.VisualToggle);
   }
 
-
-
-  lazyLoadToggleChange() {
-    this.LazyloadToggle = !this.LazyloadToggle;
-    //console.log(this.LazyloadToggle);
+  //method for resetting feedback text in maintainage view
+  resetFedBack() {
+    if (this.infoFeedback != '') {
+      this.infoFeedback = '';
+    }
   }
 
-  resetFedBack()
-  {
-    if(this.infoFeedback != "")
-      {
-        this.infoFeedback = "";
-      }
-  }
-
-
-  //test out search
-
+  //event listening on user input
   onInput(event: any) {
-
-    console.log("hello");
+    console.log('hello');
 
     const inputValue = (event.target as HTMLInputElement).value.trim();
 
-  // Clear filteredOptions if input is empty
-  if (!inputValue) {
-    this.filteredOptions = [];
-    return;
-  }
+    // Clear filteredOptions if input is empty
+    if (!inputValue) {
+      this.filteredOptions = [];
+      return;
+    }
 
     const searchText = event.target.value.toLowerCase();
-   // this.filteredOptions =  console.log("text");
-    this.repository.getAddresses(searchText).subscribe((data) =>{
+    this.repository.getAddresses(searchText).subscribe((data) => {
       this.filteredOptions = data;
       console.log(data);
     });
   }
-
-
 }

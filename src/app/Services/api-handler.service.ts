@@ -1,4 +1,4 @@
-import { Injectable, Input } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { InputModel } from '../Model/input-model';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -7,10 +7,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root',
 })
 export class ApiHandlerService {
-  url: string = 'dvf-https//api.weblion.dk/';
-  //dummyUrl: string = 'https://localhost:7121/WeatherForecast';
+
+  url: string = 'https//dvf-api.weblion.dk/';
   constructor(private http: HttpClient) {}
 
+  //calls the api which returns the total number of locations in the database
   getLocationCount(): Observable<any> {
     try {
       const url = `${this.url}/weatherData/GetLocationCount?`;
@@ -22,11 +23,11 @@ export class ApiHandlerService {
     }
   }
 
+  //calls the api to return weather data based on search criteria
   public GetWeatherData(inputData: InputModel): Observable<any> {
-    //console.log('input: ', inputData);
+
     let myheaders = new HttpHeaders();
     myheaders.append('Content-Type', 'application/json');
-
 
     const parameters = {
       coordinates: inputData.Coordinates,
@@ -35,13 +36,12 @@ export class ApiHandlerService {
       ToDate: inputData.TodDate,
     };
 
-
-
     return this.http.get<any>(`${this.url}/weatherData/GetWeatherData`, {
       params: parameters,
     });
   }
 
+  //calls the api to delete weather data from the database and file server
   public DeleteWeather(deleteDate: Date): Observable<any> {
     try {
       return this.http.post<any>(
@@ -53,6 +53,7 @@ export class ApiHandlerService {
     }
   }
 
+  //calls the api to restore all data from the database and file server
   public RestoreData() {
     try {
       return this.http.post<any>(`${this.url}/Maintenance/RestoreData`, {});
@@ -61,6 +62,7 @@ export class ApiHandlerService {
     }
   }
 
+  //calls the api to return a number of locations based on their id number in the database
   public GetLocations(fromIndex: number, toIndex: number): Observable<any> {
     try {
       const data = { fromIndex: fromIndex, toIndex: toIndex };
@@ -72,16 +74,7 @@ export class ApiHandlerService {
     }
   }
 
-  public GetLocationCount(): Observable<any> {
-    try {
-      return this.http.get<any>(
-        `${this.url}/Maintenance/GetLocationCount`
-      );
-    } catch (error) {
-      console.error('Error deleting weather data:', error);
-    }
-  }
-
+  //calls the api to return a list of addresses based on a partial typed address
   public GetAdress(input:string): Observable<any> {
     try {
       const data = {addressInput: input};

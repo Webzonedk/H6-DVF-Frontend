@@ -1,10 +1,17 @@
-<div class="row container-fluid">
+<div class="row">
   <!--list header-->
 
-  <div class="container colorscheme">
+  <div class="colorscheme">
     <div class="row">
+      <!-- Left Section -->
       <div class="col">
         <div class="row p-1">
+          <!-- Left Column Header -->
+          <div class="col-12 text-center meta-font">
+            <h5 class="column-header">Data hentning</h5>
+          </div>
+
+          <!-- Left Column Data -->
           <div class="col meta-font">
             <div class="row p-1">
               <h6>
@@ -18,65 +25,70 @@
           <div class="col-1 verticalLineContainer">
             <div class="verticalLine"></div>
           </div>
-
-          <div class="col meta-font text-left">
+          <div class="col meta-font">
             <div class="row p-1">
               <h6>Ram brugt: {{ weatherDateCollection?.RamUsage }}</h6>
             </div>
             <div class="row p-1">
-              <h6>CPU brugt: {{ weatherDateCollection?.CPUUsage }}</h6>
+              <h6>Cpu brugt: {{ weatherDateCollection?.CPUUsage }} %</h6>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-2 meta-font">
+
+      <!-- Middle Section -->
+      <div class="col-md-2 meta-font centerText">
         <h2>MetaData</h2>
       </div>
+
+      <!-- Right Section -->
       <div class="col centerText">
-
-        <div class="row ">
-          <!-- First header -->
-          <!-- <div class="col meta-font">
-              <h5>Data behandling</h5>
-          </div> -->
-
-          <!-- Second and third headers -->
-          <div class="col ">
-              <div class="row">
-                  <!-- Second header -->
-                  <h6 class="col-md-12  meta-font">
-                      <div>
-                          Data konvertering: {{ weatherDateCollection?.ConvertionTimer }}
-                      </div>
-                  </h6>
-              </div>
-
-              <!-- Fourth header -->
-              <div class="row meta-font">
-                  <!-- Third header -->
-                  <div class="col-md-5 ">
-                      <h6>
-                          Ram brugt: {{ weatherDateCollection?.ConvertionRamUsage }}
-                      </h6>
-                  </div>
-
-                  <div class="col-1 verticalLineContainer centerText">
-                    <div class="verticalLine"></div>
-                  </div>
-
-                  <h6 class="col-md-5">
-                      <div>
-                          CPU brugt: {{ weatherDateCollection?.ConvertionCpuUsage }}
-                      </div>
-                  </h6>
-              </div>
+        <div class="row">
+          <!-- Right Column Header -->
+          <div class="col-12 text-center meta-font">
+            <h5 class="column-header">Data behandling</h5>
           </div>
-      </div>
 
+          <!-- Right Column Data -->
+          <div class="col">
+            <!-- Second header -->
+            <div class="row">
+              <h6 class="col-md-12 meta-font">
+                <div>
+                  Tidsforbrug:
+                  {{ weatherDateCollection?.ConvertionTimer }}
+                </div>
+              </h6>
+            </div>
+
+            <div class="col meta-font">
+              <!-- Fourth header -->
+              <div class="row text-center">
+                <!-- Third header -->
+                <div class="col">
+                  <h6>
+                    Ram brugt: {{ weatherDateCollection?.ConvertionRamUsage }}
+                  </h6>
+                </div>
+
+                <div class="col-1 verticalLineContainer Left " style="margin-left: 10px;">
+                  <div class="verticalLine"></div>
+                </div>
+
+                <h6 class="col">
+                  <div>
+                    CPU brugt: {{ weatherDateCollection?.ConvertionCpuUsage }} %
+                  </div>
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
+  <!--header for showing lists-->
   <div class="container colorscheme" *ngIf="!cardviewToogle">
     <div class="row">
       <div class="col-md-3">
@@ -101,7 +113,6 @@
           <div class="col border header centerText">Sol Azimuth grader</div>
         </div>
       </div>
-      
     </div>
   </div>
   <div class="row" *ngIf="weatherDateCollection != null">

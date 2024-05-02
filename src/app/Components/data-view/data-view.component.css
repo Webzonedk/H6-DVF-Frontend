@@ -29,7 +29,8 @@
 
 .scroll{
   overflow-y: auto;
-  max-height:85vh;
+  max-height:81vh;
+
 }
 
 .metadata{

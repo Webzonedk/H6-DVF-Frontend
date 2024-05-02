@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { LocationModel } from '../../Model/location-model';
 import { WeatherModel } from './../../Model/weather-model';
 import { Component, Input } from '@angular/core';
 
@@ -14,7 +13,5 @@ import { Component, Input } from '@angular/core';
 })
 export class ListElementComponent {
  @Input() dataSource: WeatherModel;
-//  @Input() locationSource: LocationModel;
-
 
 }

@@ -27,30 +27,18 @@ export class DataViewComponent {
   constructor(private repoService: RepositoryHandlerService) {}
 
   ngOnInit(): void {
-    //subscribe to test
+    //subscribe to cleanup
     this.repoService.CleanupMethodObservable$.subscribe(() => {
       this.clearData();
     });
 
     // this.fetchData(this.fromIndex, this.toIndex);
-    this.generateDummyData();
+    //this.generateDummyData();
     this.repoService.subcribeToweatherData().subscribe((data) => {
       if (data != null) {
         this.SetTotalDataPoints();
         if (this.weatherDateCollection == null) {
           this.weatherDateCollection = data;
-
-
-          // console.log(
-          //   'first data: ',
-          //   this.totalDataPoints,
-          //   ' fromIndex: ',
-          //   this.fromIndex,
-          //   ' toIndex: ',
-          //   this.toIndex,
-          //   'chunk amount: ',
-          //   this.repoService.ChunkAmount
-          // );
         } else {
           this.weatherDateCollection.Dailyweather = [
             ...this.weatherDateCollection.Dailyweather,
@@ -58,43 +46,39 @@ export class DataViewComponent {
           ];
 
           this.RemoveOldData();
-        console.log("total datapoints: ",this.weatherDateCollection.Dailyweather.length, "of: ",this.totalDataPoints);
-
-         // console.log('added data ', this.fromIndex);
-          // console.log(
-          //   'second data: ',
-          //   this.totalDataPoints,
-          //   ' fromIndex: ',
-          //   this.fromIndex,
-          //   ' toIndex: ',
-          //   this.toIndex
-          // );
+          console.log(
+            'total datapoints: ',
+            this.weatherDateCollection.Dailyweather.length,
+            'of: ',
+            this.totalDataPoints
+          );
         }
       }
     });
   }
 
+  //creates dummy data for testing purposes
   generateDummyData() {
     const location: LocationModel = {
-      Longitude: 123.456, // Sample longitude
-      Latitude: 789.012, // Sample latitude
+      Longitude: 123.456,
+      Latitude: 789.012,
     };
 
     const weatherArray: WeatherModel[] = [
       {
-        Temperature: 16.5, // Sample temperature
-        Rain: 2.1, // Sample rain
-        WindSpeed: 6.5, // Sample wind speed
-        WindDirection: 180, // Sample wind direction
-        WindGusts: 10.6, // Sample wind gusts
-        SunElevationAngle: 45, // Sample sun elevation angle
-        SunAzimuthAngle: 120, // Sample sun azimuth angle
-        GTI: 122.8, // Sample GTI
-        RelativeHumidity: 60, // Sample relative humidity
-        DateandTime: new Date().toString(), // Current date and time
+        Temperature: 16.5,
+        Rain: 2.1,
+        WindSpeed: 6.5,
+        WindDirection: 180,
+        WindGusts: 10.6,
+        SunElevationAngle: 45,
+        SunAzimuthAngle: 120,
+        GTI: 122.8,
+        RelativeHumidity: 60,
+        DateandTime: new Date().toString(),
         Address: 'Vejrvænget 24, 12345 vejby',
-        Latitude: "54.91883827",
-        Longitude: "09.89751434",
+        Latitude: '54.91883827',
+        Longitude: '09.89751434',
       },
     ];
 
@@ -105,23 +89,18 @@ export class DataViewComponent {
 
     const metaData: MetaDataModel = {
       CPUUsage: 98,
-      RamUsage: "5000 mb",
-      DataAmount: "1500 mb",
-      DataCollectedTime: "200 ms",
+      RamUsage: '5000 mb',
+      DataAmount: '1500 mb',
+      DataCollectedTime: '200 ms',
       Dailyweather: weatherArray,
       ConvertionCpuUsage: 100,
-      ConvertionRamUsage: "200 mb",
-      ConvertionTimer: "1 ms"
+      ConvertionRamUsage: '200 mb',
+      ConvertionTimer: '1 ms',
     };
     this.weatherDateCollection = metaData;
-    // const numberOfEntries = 1; // Number of dummy entries
-    // for (let i = 0; i < numberOfEntries; i++) {
-    //   this.weatherDateCollection.push(metaData);
-    // }
-
-    //console.log(this.weatherDateCollection);
   }
 
+  //get weatherdata within a chunk
   fetchData(fromIndex: number, toIndex: number) {
     if (fromIndex > 0) {
       this.repoService.getLocations(fromIndex, toIndex).subscribe({
@@ -129,8 +108,6 @@ export class DataViewComponent {
           this.repoService.getWeatherData(
             this.repoService.returnUserInput(locations)
           );
-          //console.log('getting data');
-          // this.weatherDateCollection.Dailyweather = [...this.weatherDateCollection.Dailyweather,...response.Dailyweather];
         },
 
         error: (error) => console.log(error),
@@ -138,61 +115,47 @@ export class DataViewComponent {
     }
   }
 
+  //lazy load new data when scrolling
   public OnScroll() {
-    // console.log("i am scrolling");
-    //keep going until finished
 
     const element = this.element.nativeElement;
     const totalScrolled =
       Math.round(element.clientHeight + element.scrollTop) + 1;
     const scrollHeight = Math.round(element.scrollHeight);
 
-    // console.log(
-    //   'clientHeight: ',
-    //   totalScrolled,
-    //   'scrollHeight:',
-    //   scrollHeight,
-    //   'weatherLength: ',
-    //   this.weatherDateCollection.Dailyweather.length,
-    //   'total: ',
-    //   this.totalDataPoints
-    // );
     if (
       totalScrolled === scrollHeight &&
       this.weatherDateCollection.Dailyweather.length < this.totalDataPoints
     ) {
-
       this.fetchData(this.fromIndex, this.toIndex);
       this.fromIndex += this.repoService.ChunkAmount;
       this.toIndex = this.fromIndex + this.repoService.ChunkAmount - 1;
     }
   }
 
+  //set total data being lazy loaded
   SetTotalDataPoints() {
-    //set total data being lazy loaded
-   // console.log(this.totalDataPoints);
+
     if (this.totalDataPoints == 0) {
       this.repoService.getTotalLocations().subscribe((value: number) => {
         this.totalDataPoints = value;
-       // console.log('first time running collection');
         this.fromIndex = this.repoService.ChunkAmount + 1;
-          this.toIndex = this.fromIndex + this.repoService.ChunkAmount - 1;
+        this.toIndex = this.fromIndex + this.repoService.ChunkAmount - 1;
       });
     }
   }
 
-  RemoveOldData()
-  {
-    if(this.weatherDateCollection.Dailyweather != null)
-      {
-        if(this.weatherDateCollection.Dailyweather.length > 5000)
-          {
-            console.log("removing data");
-            this.weatherDateCollection.Dailyweather.splice(0,1000);
-          }
+  //remove old data when lazy loading
+  RemoveOldData() {
+    if (this.weatherDateCollection.Dailyweather != null) {
+      if (this.weatherDateCollection.Dailyweather.length > 5000) {
+        console.log('removing data');
+        this.weatherDateCollection.Dailyweather.splice(0, 1000);
       }
+    }
   }
 
+  //clear view of data
   clearData() {
     if (this.weatherDateCollection != null) {
       if (this.weatherDateCollection.Dailyweather == null) {
@@ -202,9 +165,9 @@ export class DataViewComponent {
       if (this.weatherDateCollection.Dailyweather.length > 0) {
         this.weatherDateCollection.Dailyweather = [];
         this.weatherDateCollection.CPUUsage = 0;
-        this.weatherDateCollection.DataAmount ="";
-        this.weatherDateCollection.DataCollectedTime = "";
-        this.weatherDateCollection.RamUsage = "";
+        this.weatherDateCollection.DataAmount = '';
+        this.weatherDateCollection.DataCollectedTime = '';
+        this.weatherDateCollection.RamUsage = '';
         this.fromIndex = 0;
         this.toIndex = 0;
         this.totalDataPoints = 0;

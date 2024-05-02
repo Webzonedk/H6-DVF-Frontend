@@ -21,7 +21,7 @@ import { DataViewComponent } from '../data-view/data-view.component';
 export class NavBarMenuComponent {
   currentDate: string;
   Maintainage: boolean = false;
-  VisualToggle: boolean = true;
+  VisualToggle: boolean = false;
   LazyloadToggle: boolean;
   inputForm: FormGroup;
   deleteForm: FormGroup;

@@ -1,46 +1,49 @@
 <!-- Left Section -->
-<div class="col-md-3">
-
-
-  <div class="row">
-    <!-- First two data points with borders -->
-    <div class="col border border-dark textstyle">{{ dataSource.DateandTime | date : "yyyy-MM-dd-HH:mm" }}</div>
-    <div class="col border border-dark textstyle">{{ dataSource.Address }}</div>
+  <div class="col-md-3">
+    <div class="row">
+      <!-- First two data points with borders -->
+      <div class="col border border-grey textstyle">
+        {{ dataSource.DateandTime | date : "yyyy-MM-dd-HH:mm" }}
+      </div>
+      <div class="col border border-grey textstyle">
+        {{ dataSource.Address }}
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- Right Section -->
-<div class="col-md-9">
-  <!-- Remaining data points with borders -->
-  <div class="row">
-    <div class="col-md border border-dark textstyle">
+  <!-- Right Section -->
+  <div class="col-md-9">
+    <!-- Remaining data points with borders -->
+    <div class="row">
+    <div class="col-md  border border-grey textstyle">
         {{ dataSource.Latitude }}
     </div>
-    <div class="col-md border border-dark textstyle">
+    <div class="col-md border border-grey textstyle">
         {{ dataSource.Longitude }}
     </div>
-    <div class="col-md border border-dark textstyle">
+    <div class="col-md border border-grey textstyle">
         {{ dataSource.Temperature }}
     </div>
-    <div class="col-md border border-dark textstyle">
+    <div class="col-md border border-grey textstyle">
         {{ dataSource.WindSpeed }}
     </div>
-    <div class="col-md border border-dark textstyle">
+    <div class="col-md border border-grey textstyle">
         {{ dataSource.WindDirection }}
     </div>
-    <div class="col-md border border-dark textstyle">
+    <div class="col-md border border-grey textstyle">
         {{ dataSource.WindGusts }}
     </div>
-    <div class="col-md border border-dark textstyle">
+    <div class="col-md border border-grey textstyle">
         {{ dataSource.RelativeHumidity }}
     </div>
-    <div class="col-md border border-dark textstyle">{{ dataSource.Rain }}</div>
-    <div class="col-md border border-dark textstyle">{{ dataSource.GTI }}</div>
-    <div class="col-md border border-dark textstyle">
+    <div class="col-md border border-grey textstyle">{{ dataSource.Rain }}</div>
+    <div class="col-md border border-grey textstyle">{{ dataSource.GTI }}</div>
+    <div class="col-md border border-grey textstyle">
         {{ dataSource.SunElevationAngle }}
     </div>
-    <div class="col-md border border-dark textstyle">
+    <div class="col-md border border-grey textstyle">
         {{ dataSource.SunAzimuthAngle }}
     </div>
 </div>
-</div>
+  </div>
+

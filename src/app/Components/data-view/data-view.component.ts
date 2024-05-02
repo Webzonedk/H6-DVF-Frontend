@@ -31,7 +31,7 @@ export class DataViewComponent {
     });
 
 
-    this.generateDummyData(10000);
+    //this.generateDummyData(100);
     this.repoService.subcribeToweatherData().subscribe((data) => {
       if (data != null) {
         this.SetTotalDataPoints();

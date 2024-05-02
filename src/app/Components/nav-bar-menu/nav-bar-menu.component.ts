@@ -119,20 +119,21 @@ export class NavBarMenuComponent {
 
   //event listening on user input
   onInput(event: any) {
-    console.log('hello');
+
 
     const inputValue = (event.target as HTMLInputElement).value.trim();
 
     // Clear filteredOptions if input is empty
     if (!inputValue) {
       this.filteredOptions = [];
+
       return;
     }
 
     const searchText = event.target.value.toLowerCase();
     this.repository.getAddresses(searchText).subscribe((data) => {
       this.filteredOptions = data;
-      console.log(data);
+
     });
   }
 }

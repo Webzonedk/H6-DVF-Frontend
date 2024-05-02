@@ -25,6 +25,9 @@ export class DataViewComponent {
   constructor(private repoService: RepositoryHandlerService) {}
 
   ngOnInit(): void {
+
+
+
     //subscribe to cleanup
     this.repoService.CleanupMethodObservable$.subscribe(() => {
       this.clearData();

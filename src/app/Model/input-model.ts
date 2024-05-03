@@ -1,5 +1,5 @@
 export interface InputModel {
-  Coordinates: string;
+  Coordinates: string[];
   FromDate: string;
   TodDate: string;
   DataSource: boolean;

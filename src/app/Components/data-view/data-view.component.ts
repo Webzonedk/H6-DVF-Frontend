@@ -45,7 +45,7 @@ export class DataViewComponent {
             ...this.weatherDateCollection.Dailyweather,
             ...data.Dailyweather,
           ];
-
+          this.weatherDateCollection = data;
           this.RemoveOldData();
           console.log(
             'total datapoints: ',
@@ -157,10 +157,13 @@ export class DataViewComponent {
 
       if (this.weatherDateCollection.Dailyweather.length > 0) {
         this.weatherDateCollection.Dailyweather = [];
-        this.weatherDateCollection.CPUUsage = 0;
-        this.weatherDateCollection.DataAmount = '';
-        this.weatherDateCollection.DataCollectedTime = '';
-        this.weatherDateCollection.RamUsage = '';
+        // this.weatherDateCollection.CPUUsage = 0;
+        // this.weatherDateCollection.DataAmount = '';
+        // this.weatherDateCollection.DataCollectedTime = '';
+        // this.weatherDateCollection.RamUsage = '';
+        // this.weatherDateCollection.ConvertionCpuUsage =0;
+        // this.weatherDateCollection.ConvertionRamUsage ="";
+        // this.weatherDateCollection.ConvertionTimer ="";
         this.fromIndex = 0;
         this.toIndex = 0;
         this.totalDataPoints = 0;

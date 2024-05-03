@@ -21,7 +21,7 @@ import { DataViewComponent } from '../data-view/data-view.component';
 export class NavBarMenuComponent {
   currentDate: string;
   Maintainage: boolean = false;
-  VisualToggle: boolean = false;
+  VisualToggle: boolean = true;
   LazyloadToggle: boolean;
   inputForm: FormGroup;
   deleteForm: FormGroup;
@@ -67,7 +67,7 @@ export class NavBarMenuComponent {
       DataSource: this.inputForm.get('DataSource').value,
     };
 
-    if (input.Coordinates == '') {
+    if (input.Coordinates.length < 1) {
       this.repository.RunCleanup();
       this.repository.getLocations(0, chunkSize).subscribe({
         next: (locations) => {
@@ -85,7 +85,9 @@ export class NavBarMenuComponent {
 
   //calls the repository service to remove old weatherdata in the database & file server
   DeleteWeatherData() {
-    const formData: Date = this.deleteForm.value;
+
+    const formData: Date = this.deleteForm.get('deleteDate').value;
+    console.log(formData);
     this.repository.deleteData(formData);
     this.repository.RunCleanup();
   }
@@ -119,20 +121,21 @@ export class NavBarMenuComponent {
 
   //event listening on user input
   onInput(event: any) {
-    console.log('hello');
+
 
     const inputValue = (event.target as HTMLInputElement).value.trim();
 
     // Clear filteredOptions if input is empty
     if (!inputValue) {
       this.filteredOptions = [];
+
       return;
     }
 
     const searchText = event.target.value.toLowerCase();
     this.repository.getAddresses(searchText).subscribe((data) => {
       this.filteredOptions = data;
-      console.log(data);
+
     });
   }
 }

@@ -15,11 +15,11 @@
           <div class="col meta-font">
             <div class="row ">
               <div class="col-6 header-text">Tidsforbrug:</div>
-              <div class=" col-6 header-value">{{ weatherDateCollection.DataCollectedTime }}</div>
+              <div class=" col-6 header-value">{{ weatherDateCollection?.DataCollectedTime }}</div>
             </div>
             <div class="row ">
               <div class="col-6 header-text">Hentet data:</div>
-              <div class="col-6 header-value">{{ weatherDateCollection.DataAmount }}</div>
+              <div class="col-6 header-value">{{ weatherDateCollection?.DataAmount }}</div>
             </div>
           </div>
           <div class="col-1 verticalLineContainer">
@@ -29,11 +29,11 @@
           <div class="col meta-font">
             <div class="row ">
               <div class="col-6 header-text">Ram brugt:</div>
-              <div class=" col-6 header-value">{{ weatherDateCollection.RamUsage }}</div>
+              <div class=" col-6 header-value">{{ weatherDateCollection?.RamUsage }}</div>
             </div>
             <div class="row ">
               <div class="col-6 header-text">Cpu brugt:</div>
-              <div class="col-6 header-value">{{ weatherDateCollection.CPUUsage }} %</div>
+              <div class="col-6 header-value">{{ weatherDateCollection?.CPUUsage }} %</div>
             </div>
           </div>
 
@@ -78,7 +78,7 @@
                 <div class="col meta-font">
                   <div class="row ">
                     <div class="col-6 header-text">Ram brugt:</div>
-                    <div class=" col-6 header-value">{{ weatherDateCollection.ConvertionRamUsage }}</div>
+                    <div class=" col-6 header-value">{{ weatherDateCollection?.ConvertionRamUsage }}</div>
                   </div>
 
                 </div>
@@ -93,7 +93,7 @@
                 <div class="col meta-font">
                   <div class="row ">
                     <div class="col-6 header-text">Cpu brugt:</div>
-                    <div class=" col-6 header-value">{{ weatherDateCollection.ConvertionCpuUsage }} %</div>
+                    <div class=" col-6 header-value">{{ weatherDateCollection?.ConvertionCpuUsage }} %</div>
                   </div>
 
                 </div>
@@ -112,14 +112,14 @@
     <div class="container-fluid-flex colorscheme " >
       <div class="" *ngIf="!cardviewToogle">
         <div class="row " style="margin-right: 6px;">
-          <div class="col-md-3 ">
+          <div class="col-md-4 ">
             <div class="row">
-              <div class="col border border-grey header centerText">Tidspunkt (zulu)</div>
-              <div class="col border border-grey header centerText">Adresse</div>
+              <div class="col-3 border border-grey header centerText">Tidspunkt (zulu)</div>
+              <div class="col-9 border border-grey header centerText">Adresse</div>
             </div>
           </div>
 
-          <div class="col-md-9 ">
+          <div class="col-md-8">
             <div class="row">
               <div class="col border border-grey header nowrap">Breddegrad</div>
               <div class="col border border-grey header nowrap">Længdegrad</div>

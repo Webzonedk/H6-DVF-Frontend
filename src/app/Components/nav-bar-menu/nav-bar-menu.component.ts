@@ -67,7 +67,10 @@ export class NavBarMenuComponent {
       DataSource: this.inputForm.get('DataSource').value,
     };
 
-
+    if(input.Coordinates[0] =="")
+      {
+        input.Coordinates = [];
+      }
 
     if (input.Coordinates.length >= 1) {
       const id = this.repository.getLOcationIndex(input.Coordinates[0])
@@ -83,7 +86,15 @@ export class NavBarMenuComponent {
       });
     } else {
 
-      this.repository.getWeatherData(input);
+      console.log("getting all locations")
+      this.repository.getLocations(0,  chunkSize).subscribe({
+        next: (locations) => {
+          input.Coordinates = locations;
+          this.repository.ChunkAmount = chunkSize;
+          this.repository.getWeatherData(input);
+          this.repository.userInput = input;
+        },
+      });
       this.repository.RunCleanup();
     }
   }

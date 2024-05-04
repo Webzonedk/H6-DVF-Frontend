@@ -63,13 +63,17 @@ export class NavBarMenuComponent {
     const input: InputModel = {
       FromDate: this.inputForm.get('FromDate').value,
       TodDate: this.inputForm.get('ToDate').value,
-      Coordinates: this.inputForm.get('Address').value,
+      Coordinates: [this.inputForm.get('Address').value],
       DataSource: this.inputForm.get('DataSource').value,
     };
 
-    if (input.Coordinates.length < 1) {
+
+
+    if (input.Coordinates.length >= 1) {
+      const id = this.repository.getLOcationIndex(input.Coordinates[0])
+      console.log(id);
       this.repository.RunCleanup();
-      this.repository.getLocations(0, chunkSize).subscribe({
+      this.repository.getLocations(id, id + chunkSize).subscribe({
         next: (locations) => {
           input.Coordinates = locations;
           this.repository.ChunkAmount = chunkSize;
@@ -78,6 +82,7 @@ export class NavBarMenuComponent {
         },
       });
     } else {
+
       this.repository.getWeatherData(input);
       this.repository.RunCleanup();
     }
@@ -138,4 +143,9 @@ export class NavBarMenuComponent {
 
     });
   }
+
+  onOptionSelected(option: string) {
+    this.inputForm.get('Address').setValue(option);
+  }
+
 }

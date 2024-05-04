@@ -18,6 +18,7 @@ export class RepositoryHandlerService {
   CleanupMethodObservable$: Observable<void> = this.RunCleanupMethodSubject.asObservable();
   ChunkAmount: number;
   userInput: InputModel;
+  addressList: string[];
 
   constructor(private api: ApiHandlerService,private datePipe: DatePipe) {}
 
@@ -139,7 +140,52 @@ export class RepositoryHandlerService {
   }
 
   //method returns a list of addresses based on a partial typed address
+  // getAddresses(input: string): Observable<string[]> {
+  //   return this.api.GetAdress(input);
+  // }
+
+  getLOcationIndex(address: string): number
+  {
+
+    for (let index = 0; index < this.addressList.length; index++) {
+      let curAddress = this.addressList[index];
+
+      const splitted = curAddress.split(':');
+      let matchingAddress = splitted[1];
+      if(matchingAddress == address)
+        {
+
+          const id = parseInt(splitted[0], 10);
+          this.addressList = [];
+          return id; // Return the converted number
+        }
+    }
+
+    return 0;
+  }
+
   getAddresses(input: string): Observable<string[]> {
-    return this.api.GetAdress(input);
+    // Get the list of addresses from the API
+    return this.api.GetAdress(input).pipe(
+      map(addresses => {
+        // Copy original list to persistent list
+        if(addresses.length > 0)
+          {
+            this.addressList = [...addresses];
+
+          }
+
+        // Modify each element of the original list
+        for (let i = 0; i < addresses.length; i++) {
+          const address = addresses[i];
+          const index = address.indexOf(':');
+          if (index !== -1) {
+            addresses[i] = address.substr(index + 1); // Remove characters before ":" including ":"
+          }
+        }
+
+        return addresses; // Return the modified list
+      })
+    );
   }
 }

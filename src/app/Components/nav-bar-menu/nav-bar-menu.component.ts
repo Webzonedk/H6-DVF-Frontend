@@ -144,6 +144,7 @@ export class NavBarMenuComponent {
     });
   }
 
+  //updates the form data after selecting an address
   onOptionSelected(option: string) {
     this.inputForm.get('Address').setValue(option);
   }

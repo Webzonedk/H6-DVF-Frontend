@@ -69,6 +69,7 @@
                     list="optionsList"
                     (input)="onInput($event)"
                     placeholder="søg..."
+                    (change)="onOptionSelected($event.target.value)"
                   />
                   <datalist id="optionsList">
                     <option

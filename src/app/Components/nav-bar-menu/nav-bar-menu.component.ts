@@ -45,7 +45,7 @@ export class NavBarMenuComponent {
       FromDate: [new Date().toISOString().substring(0, 10)],
       ToDate: [new Date().toISOString().substring(0, 10)],
       DataSource: [false],
-      numChunks: 5,
+      numChunks: [5],
     });
 
     this.deleteForm = this.fb.group({
@@ -59,7 +59,7 @@ export class NavBarMenuComponent {
 
   //method calls the service layer for data & removes old data from the view
   GetWeatherData() {
-    const chunkSize = this.inputForm.get('numChunks').value;
+    let chunkSize = this.inputForm.get('numChunks').value;
     const input: InputModel = {
       FromDate: this.inputForm.get('FromDate').value,
       TodDate: this.inputForm.get('ToDate').value,
@@ -67,27 +67,30 @@ export class NavBarMenuComponent {
       DataSource: this.inputForm.get('DataSource').value,
     };
 
-    if(input.Coordinates[0] =="")
-      {
-        input.Coordinates = [];
-      }
+    if (input.Coordinates[0] == '') {
+      input.Coordinates = [];
+    }
+    if (chunkSize > 100) {
+      chunkSize = 100;
+    }
+    console.log(chunkSize)
 
     if (input.Coordinates.length >= 1) {
-      const id = this.repository.getLOcationIndex(input.Coordinates[0])
-      console.log(id);
+      const id = this.repository.getLOcationIndex(input.Coordinates[0]);
+      console.log("returned ids: " +id);
       this.repository.RunCleanup();
       this.repository.getLocations(id, id + chunkSize).subscribe({
         next: (locations) => {
           input.Coordinates = locations;
+          console.log("number of coordinates: " +locations)
           this.repository.ChunkAmount = chunkSize;
           this.repository.getWeatherData(input);
           this.repository.userInput = input;
         },
       });
     } else {
-
-      console.log("getting all locations")
-      this.repository.getLocations(0,  chunkSize).subscribe({
+      console.log('getting all locations');
+      this.repository.getLocations(0, chunkSize).subscribe({
         next: (locations) => {
           input.Coordinates = locations;
           this.repository.ChunkAmount = chunkSize;
@@ -101,7 +104,6 @@ export class NavBarMenuComponent {
 
   //calls the repository service to remove old weatherdata in the database & file server
   DeleteWeatherData() {
-
     const formData: Date = this.deleteForm.get('deleteDate').value;
     console.log(formData);
     this.repository.deleteData(formData);
@@ -137,8 +139,6 @@ export class NavBarMenuComponent {
 
   //event listening on user input
   onInput(event: any) {
-
-
     const inputValue = (event.target as HTMLInputElement).value.trim();
 
     // Clear filteredOptions if input is empty
@@ -151,7 +151,6 @@ export class NavBarMenuComponent {
     const searchText = event.target.value.toLowerCase();
     this.repository.getAddresses(searchText).subscribe((data) => {
       this.filteredOptions = data;
-
     });
   }
 
@@ -160,4 +159,25 @@ export class NavBarMenuComponent {
     this.inputForm.get('Address').setValue(option);
   }
 
+  onInputChange(event: any) {
+    const value = parseInt(event.target.value, 10);
+    const max = parseInt(event.target.max, 10);
+
+    if (value > max) {
+      event.target.value = max;
+      this.inputForm.controls['numChunks'].setValue(max);
+    }
+  }
+
+  DisableLocationsInput(addressValue: string) {
+    if(addressValue.length > 0)
+      {
+        this.inputForm.get('numChunks')!.disable();
+        this.inputForm.controls['numChunks'].setValue(1);
+      }
+      else
+      {
+        this.inputForm.get('numChunks')!.enable();
+      }
+  }
 }

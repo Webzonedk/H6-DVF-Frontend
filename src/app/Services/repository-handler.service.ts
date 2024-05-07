@@ -43,7 +43,7 @@ export class RepositoryHandlerService {
     try {
       this.api.GetWeatherData(inputData).subscribe({
         next: (data) => {
-          console.log(data);
+          console.log("my data: ",data);
           const data2 = data.weatherData.map((weatherInfo) => {
             const weatherData: WeatherModel = {
               Address: weatherInfo.address,
@@ -58,10 +58,14 @@ export class RepositoryHandlerService {
               SunElevationAngle: weatherInfo.sunElevationAngle.toFixed(2),
               SunAzimuthAngle: weatherInfo.sunAzimuthAngle.toFixed(2),
               GTI: weatherInfo.globalTiltedIrRadiance.toFixed(2),
-              DateandTime: weatherInfo.dateAndTime, // Assuming you want to use DateAndTime as TimeOfDay
+              DateandTime: weatherInfo.dateAndTime,
             };
             return weatherData;
+
           });
+
+
+
 
           const metaData: MetaDataModel = {
             DataCollectedTime: data.fetchDataTimer,
@@ -110,7 +114,7 @@ export class RepositoryHandlerService {
         }
       },
       error: (error) => {
-        // console.log('my error: ', error);
+
         this.info$.next('error 404');
       },
     });
@@ -120,13 +124,14 @@ export class RepositoryHandlerService {
   getLocations(fromIndex: number, toIndex: number): Observable<any> {
     return this.api.GetLocations(fromIndex, toIndex).pipe(
       map((response: any) => {
-        // Extracting coordinates from the response object
+
         const coordinates: string[] = [];
         for (const key in response) {
           if (response.hasOwnProperty(key)) {
             coordinates.push(response[key]);
           }
         }
+
         return coordinates;
       })
     );
@@ -147,7 +152,7 @@ export class RepositoryHandlerService {
       if (matchingAddress == address) {
         const id = parseInt(splitted[0], 10);
         this.addressList = [];
-        return id; 
+        return id;
       }
     }
 

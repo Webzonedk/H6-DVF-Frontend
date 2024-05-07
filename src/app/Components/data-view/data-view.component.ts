@@ -37,7 +37,7 @@ export class DataViewComponent {
     //this.generateDummyData(100);
     this.repoService.subcribeToweatherData().subscribe((data) => {
       if (data != null) {
-        this.SetTotalDataPoints();
+        this.SetTotalDataPoints(this.repoService.ChunkAmount);
         if (this.weatherDateCollection == null) {
           this.weatherDateCollection = data;
         }
@@ -50,7 +50,7 @@ export class DataViewComponent {
           this.weatherDateCollection.ConvertionCpuUsage = data.ConvertionCpuUsage;
           this.weatherDateCollection.ConvertionRamUsage = data.ConvertionRamUsage;
           this.weatherDateCollection.ConvertionTimer = data.ConvertionTimer;
-          this.RemoveOldData();
+         // this.RemoveOldData();
           console.log(
             'total datapoints: ',this.weatherDateCollection.Dailyweather.length,'of: ',this.totalDataPoints,'incoming data: ',data.Dailyweather.length);
         }
@@ -116,9 +116,10 @@ export class DataViewComponent {
     const totalScrolled =Math.round(element.clientHeight + element.scrollTop) + 1;
     const scrollHeight = Math.round(element.scrollHeight);
     const difference = scrollHeight - totalScrolled;
-   
+
     //console.log('Total Scrolled:', totalScrolled, 'Scroll Height:', scrollHeight);
-    if (totalScrolled == scrollHeight || difference < 0 &&this.weatherDateCollection.Dailyweather.length < this.totalDataPoints) {
+    if (totalScrolled == scrollHeight   && this.weatherDateCollection.Dailyweather.length < this.totalDataPoints ) {
+
       console.log('accumulated data points: ',this.weatherDateCollection.Dailyweather.length,' total datapoints: ',this.totalDataPoints);
       this.fetchData(this.fromIndex, this.toIndex);
       this.fromIndex += this.repoService.ChunkAmount;
@@ -128,13 +129,23 @@ export class DataViewComponent {
   }
 
   //set total data being lazy loaded
-  SetTotalDataPoints() {
+  SetTotalDataPoints(chunkValue: number) {
     if (this.totalDataPoints == 0) {
-      this.repoService.getTotalLocations().subscribe((value: number) => {
-        this.totalDataPoints = value;
+      if(chunkValue > 1)
+        {
+          this.repoService.getTotalLocations().subscribe((value: number) => {
+            this.totalDataPoints = value;
+
+          });
+        }
+        else
+        {
+          this.totalDataPoints = 24;
+        }
+
         this.fromIndex = this.repoService.ChunkAmount + 1;
         this.toIndex = this.fromIndex + this.repoService.ChunkAmount - 1;
-      });
+
     }
   }
 

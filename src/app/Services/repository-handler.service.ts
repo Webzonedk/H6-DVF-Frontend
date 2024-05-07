@@ -41,9 +41,10 @@ export class RepositoryHandlerService {
   //method calls the api service to get data from api. Returns a mapped model from json
   public getWeatherData(inputData: InputModel) {
     try {
+
       this.api.GetWeatherData(inputData).subscribe({
         next: (data) => {
-          console.log("my data: ",data);
+         // console.log("my data: ",data);
           const data2 = data.weatherData.map((weatherInfo) => {
             const weatherData: WeatherModel = {
               Address: weatherInfo.address,
@@ -146,10 +147,10 @@ export class RepositoryHandlerService {
   getLOcationIndex(address: string): number {
     for (let index = 0; index < this.addressList.length; index++) {
       let curAddress = this.addressList[index];
-
       const splitted = curAddress.split(':');
       let matchingAddress = splitted[1];
       if (matchingAddress == address) {
+        console.log('selected address: ',curAddress);
         const id = parseInt(splitted[0], 10);
         this.addressList = [];
         return id;

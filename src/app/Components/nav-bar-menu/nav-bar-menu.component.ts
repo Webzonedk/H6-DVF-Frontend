@@ -75,11 +75,11 @@ export class NavBarMenuComponent {
     }
     console.log(chunkSize)
 
-    if (input.Coordinates.length >= 1) {
+    if (input.Coordinates.length == 1) {
       const id = this.repository.getLOcationIndex(input.Coordinates[0]);
       console.log("returned ids: " +id);
       this.repository.RunCleanup();
-      this.repository.getLocations(id, id + chunkSize).subscribe({
+      this.repository.getLocations(id, id).subscribe({
         next: (locations) => {
           input.Coordinates = locations;
           console.log("number of coordinates: " +locations)

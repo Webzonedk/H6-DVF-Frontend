@@ -51,8 +51,8 @@ export class DataViewComponent {
           this.weatherDateCollection.ConvertionCpuUsage = data.ConvertionCpuUsage;
           this.weatherDateCollection.ConvertionRamUsage = data.ConvertionRamUsage;
           this.weatherDateCollection.ConvertionTimer = data.ConvertionTimer;
-         // this.RemoveOldData();
           this.isLoading =false;
+         // this.RemoveOldData();
         }
       }
     });

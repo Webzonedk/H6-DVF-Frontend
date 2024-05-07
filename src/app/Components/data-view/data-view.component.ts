@@ -51,8 +51,8 @@ export class DataViewComponent {
           this.weatherDateCollection.ConvertionCpuUsage = data.ConvertionCpuUsage;
           this.weatherDateCollection.ConvertionRamUsage = data.ConvertionRamUsage;
           this.weatherDateCollection.ConvertionTimer = data.ConvertionTimer;
+          this.isLoading =false;
          // this.RemoveOldData();
-
         }
       }
     });
@@ -105,7 +105,7 @@ export class DataViewComponent {
           );
         },
 
-        error: (error) => console.log(error),//this would be written to a log file in production
+        error: (error) => console.log(error),//this would be written to a log file
       });
     }
   }

@@ -41,10 +41,8 @@ export class RepositoryHandlerService {
   //method calls the api service to get data from api. Returns a mapped model from json
   public getWeatherData(inputData: InputModel) {
     try {
-
       this.api.GetWeatherData(inputData).subscribe({
         next: (data) => {
-         // console.log("my data: ",data);
           const data2 = data.weatherData.map((weatherInfo) => {
             const weatherData: WeatherModel = {
               Address: weatherInfo.address,
@@ -62,11 +60,7 @@ export class RepositoryHandlerService {
               DateandTime: weatherInfo.dateAndTime,
             };
             return weatherData;
-
           });
-
-
-
 
           const metaData: MetaDataModel = {
             DataCollectedTime: data.fetchDataTimer,
@@ -92,7 +86,7 @@ export class RepositoryHandlerService {
   deleteData(toDate: Date) {
     //const dateString = toDate.toString();
     let latest_date = this.datePipe.transform(toDate, 'yyyy-MM-dd');
-    console.log(latest_date);
+
     this.api.DeleteWeather(latest_date).subscribe({
       next: (response) => {
         if (response.statusCode >= 200) {
@@ -100,7 +94,6 @@ export class RepositoryHandlerService {
         }
       },
       error: (error) => {
-        console.log('my error: ', error);
         this.info$.next('error 404');
       },
     });
@@ -115,7 +108,6 @@ export class RepositoryHandlerService {
         }
       },
       error: (error) => {
-
         this.info$.next('error 404');
       },
     });
@@ -125,7 +117,6 @@ export class RepositoryHandlerService {
   getLocations(fromIndex: number, toIndex: number): Observable<any> {
     return this.api.GetLocations(fromIndex, toIndex).pipe(
       map((response: any) => {
-
         const coordinates: string[] = [];
         for (const key in response) {
           if (response.hasOwnProperty(key)) {
@@ -150,7 +141,6 @@ export class RepositoryHandlerService {
       const splitted = curAddress.split(':');
       let matchingAddress = splitted[1];
       if (matchingAddress == address) {
-        console.log('selected address: ',curAddress);
         const id = parseInt(splitted[0], 10);
         this.addressList = [];
         return id;

@@ -18,6 +18,7 @@ export class DataViewComponent {
   fromIndex: number;
   toIndex: number;
   totalDataPoints: number = 0;
+  isLoading: boolean = false;
 
   @ViewChild('uiElement', { static: false }) public element: ElementRef;
 
@@ -51,8 +52,7 @@ export class DataViewComponent {
           this.weatherDateCollection.ConvertionRamUsage = data.ConvertionRamUsage;
           this.weatherDateCollection.ConvertionTimer = data.ConvertionTimer;
          // this.RemoveOldData();
-          console.log(
-            'total datapoints: ',this.weatherDateCollection.Dailyweather.length,'of: ',this.totalDataPoints,'incoming data: ',data.Dailyweather.length);
+
         }
       }
     });
@@ -105,7 +105,7 @@ export class DataViewComponent {
           );
         },
 
-        error: (error) => console.log(error),
+        error: (error) => console.log(error),//this would be written to a log file in production
       });
     }
   }
@@ -113,17 +113,24 @@ export class DataViewComponent {
   //lazy load new data when scrolling
   public OnScroll() {
     const element = this.element.nativeElement;
-    const totalScrolled =Math.round(element.clientHeight + element.scrollTop) + 1;
+    const totalScrolled =Math.round(element.clientHeight + element.scrollTop);
     const scrollHeight = Math.round(element.scrollHeight);
     const difference = scrollHeight - totalScrolled;
 
-    //console.log('Total Scrolled:', totalScrolled, 'Scroll Height:', scrollHeight);
-    if (totalScrolled == scrollHeight   && this.weatherDateCollection.Dailyweather.length < this.totalDataPoints ) {
 
-      console.log('accumulated data points: ',this.weatherDateCollection.Dailyweather.length,' total datapoints: ',this.totalDataPoints);
-      this.fetchData(this.fromIndex, this.toIndex);
-      this.fromIndex += this.repoService.ChunkAmount;
-      this.toIndex = this.fromIndex + this.repoService.ChunkAmount - 1;
+    if (difference < 10   && this.weatherDateCollection.Dailyweather.length < this.totalDataPoints ) {
+
+
+      if(!this.isLoading )
+        {
+          this.isLoading = true;
+          this.fetchData(this.fromIndex, this.toIndex);
+          this.fromIndex += this.repoService.ChunkAmount;
+          this.toIndex = this.fromIndex + this.repoService.ChunkAmount - 1;
+
+
+      }
+
 
     }
   }
@@ -153,7 +160,7 @@ export class DataViewComponent {
   RemoveOldData() {
     if (this.weatherDateCollection.Dailyweather != null) {
       if (this.weatherDateCollection.Dailyweather.length > 5000) {
-        console.log('removing data');
+
         this.weatherDateCollection.Dailyweather.splice(0, 2500);
       }
     }

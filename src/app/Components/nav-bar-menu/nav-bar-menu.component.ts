@@ -73,23 +73,23 @@ export class NavBarMenuComponent {
     if (chunkSize > 100) {
       chunkSize = 100;
     }
-    console.log(chunkSize)
+
 
     if (input.Coordinates.length == 1) {
       const id = this.repository.getLOcationIndex(input.Coordinates[0]);
-      console.log("returned ids: " +id);
+
       this.repository.RunCleanup();
       this.repository.getLocations(id, id).subscribe({
         next: (locations) => {
           input.Coordinates = locations;
-          console.log("number of coordinates: " +locations)
+
           this.repository.ChunkAmount = chunkSize;
           this.repository.getWeatherData(input);
           this.repository.userInput = input;
         },
       });
     } else {
-      console.log('getting all locations');
+
       this.repository.getLocations(0, chunkSize).subscribe({
         next: (locations) => {
           input.Coordinates = locations;
@@ -105,21 +105,21 @@ export class NavBarMenuComponent {
   //calls the repository service to remove old weatherdata in the database & file server
   DeleteWeatherData() {
     const formData: Date = this.deleteForm.get('deleteDate').value;
-    console.log(formData);
+
     this.repository.deleteData(formData);
     this.repository.RunCleanup();
   }
 
   //calls the repository service to restore data in the database & file server
   RestoreData() {
-    // console.log('restoring data');
+
     this.repository.restoreData();
     this.repository.RunCleanup();
   }
 
   //method to toggle between data view and maintainage view
   toggleButton(isDataButton: boolean) {
-    // console.log(this.Maintainage);
+
     this.Maintainage = !isDataButton;
     this.resetFedBack();
   }
@@ -127,7 +127,7 @@ export class NavBarMenuComponent {
   //method to toggle between showing cards or lists
   visualToggleClick() {
     this.VisualToggle = !this.VisualToggle;
-    console.log(this.VisualToggle);
+    
   }
 
   //method for resetting feedback text in maintainage view

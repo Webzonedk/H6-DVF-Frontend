@@ -153,6 +153,9 @@
           [dataSource]="metaItem"
         ></app-list-element>
       </ng-container>
+      <div *ngIf="isLoading">
+        Indlæser...
+    </div>
     </div>
 
     <div
@@ -169,6 +172,9 @@
             [dataSource]="data"
           ></app-card-element>
         </ng-container>
+        <div *ngIf="isLoading">
+          Indlæser...
+      </div>
       </div>
     </div>
   </div>

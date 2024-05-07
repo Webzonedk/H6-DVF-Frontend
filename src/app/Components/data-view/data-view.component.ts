@@ -52,7 +52,7 @@ export class DataViewComponent {
           this.weatherDateCollection.ConvertionRamUsage = data.ConvertionRamUsage;
           this.weatherDateCollection.ConvertionTimer = data.ConvertionTimer;
          // this.RemoveOldData();
-
+          this.isLoading =false;
         }
       }
     });
@@ -105,7 +105,7 @@ export class DataViewComponent {
           );
         },
 
-        error: (error) => console.log(error),//this would be written to a log file in production
+        error: (error) => console.log(error),//this would be written to a log file
       });
     }
   }

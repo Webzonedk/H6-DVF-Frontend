@@ -26,6 +26,7 @@ export class NavBarMenuComponent {
   inputForm: FormGroup;
   deleteForm: FormGroup;
   infoFeedback: string;
+   searchTimeout: any;
 
   searchControl = new FormControl('');
   showDropdown = false;
@@ -127,7 +128,7 @@ export class NavBarMenuComponent {
   //method to toggle between showing cards or lists
   visualToggleClick() {
     this.VisualToggle = !this.VisualToggle;
-    
+
   }
 
   //method for resetting feedback text in maintainage view
@@ -141,17 +142,22 @@ export class NavBarMenuComponent {
   onInput(event: any) {
     const inputValue = (event.target as HTMLInputElement).value.trim();
 
-    // Clear filteredOptions if input is empty
+
     if (!inputValue) {
       this.filteredOptions = [];
-
       return;
     }
 
-    const searchText = event.target.value.toLowerCase();
-    this.repository.getAddresses(searchText).subscribe((data) => {
-      this.filteredOptions = data;
-    });
+    clearTimeout(this.searchTimeout);
+    // Clear filteredOptions if input is empty
+    this.searchTimeout = setTimeout(() => {
+
+
+      const searchText = inputValue.toLowerCase();
+      this.repository.getAddresses(searchText).subscribe(data => {
+        this.filteredOptions = data;
+      });
+    }, 600);
   }
 
   //updates the form data after selecting an address

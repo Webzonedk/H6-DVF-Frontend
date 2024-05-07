@@ -40,19 +40,19 @@ export class DataViewComponent {
         this.SetTotalDataPoints();
         if (this.weatherDateCollection == null) {
           this.weatherDateCollection = data;
-        } else {
-          this.weatherDateCollection.Dailyweather = [
-            ...this.weatherDateCollection.Dailyweather,
-            ...data.Dailyweather,
-          ];
-          this.weatherDateCollection = data;
+        }
+        else
+        {this.weatherDateCollection.Dailyweather = [...this.weatherDateCollection.Dailyweather,...data.Dailyweather,];
+          this.weatherDateCollection.CPUUsage = data.CPUUsage;
+          this.weatherDateCollection.DataAmount = data.DataAmount;
+          this.weatherDateCollection.DataCollectedTime = data.DataCollectedTime;
+          this.weatherDateCollection.RamUsage = data.RamUsage;
+          this.weatherDateCollection.ConvertionCpuUsage = data.ConvertionCpuUsage;
+          this.weatherDateCollection.ConvertionRamUsage = data.ConvertionRamUsage;
+          this.weatherDateCollection.ConvertionTimer = data.ConvertionTimer;
           this.RemoveOldData();
           console.log(
-            'total datapoints: ',
-            this.weatherDateCollection.Dailyweather.length,
-            'of: ',
-            this.totalDataPoints
-          );
+            'total datapoints: ',this.weatherDateCollection.Dailyweather.length,'of: ',this.totalDataPoints,'incoming data: ',data.Dailyweather.length);
         }
       }
     });
@@ -113,17 +113,17 @@ export class DataViewComponent {
   //lazy load new data when scrolling
   public OnScroll() {
     const element = this.element.nativeElement;
-    const totalScrolled =
-      Math.round(element.clientHeight + element.scrollTop) + 1;
+    const totalScrolled =Math.round(element.clientHeight + element.scrollTop) + 1;
     const scrollHeight = Math.round(element.scrollHeight);
-
-    if (
-      totalScrolled === scrollHeight &&
-      this.weatherDateCollection.Dailyweather.length < this.totalDataPoints
-    ) {
+    const difference = scrollHeight - totalScrolled;
+   
+    //console.log('Total Scrolled:', totalScrolled, 'Scroll Height:', scrollHeight);
+    if (totalScrolled == scrollHeight || difference < 0 &&this.weatherDateCollection.Dailyweather.length < this.totalDataPoints) {
+      console.log('accumulated data points: ',this.weatherDateCollection.Dailyweather.length,' total datapoints: ',this.totalDataPoints);
       this.fetchData(this.fromIndex, this.toIndex);
       this.fromIndex += this.repoService.ChunkAmount;
       this.toIndex = this.fromIndex + this.repoService.ChunkAmount - 1;
+
     }
   }
 
@@ -143,7 +143,7 @@ export class DataViewComponent {
     if (this.weatherDateCollection.Dailyweather != null) {
       if (this.weatherDateCollection.Dailyweather.length > 5000) {
         console.log('removing data');
-        this.weatherDateCollection.Dailyweather.splice(0, 1000);
+        this.weatherDateCollection.Dailyweather.splice(0, 2500);
       }
     }
   }
@@ -157,13 +157,6 @@ export class DataViewComponent {
 
       if (this.weatherDateCollection.Dailyweather.length > 0) {
         this.weatherDateCollection.Dailyweather = [];
-        // this.weatherDateCollection.CPUUsage = 0;
-        // this.weatherDateCollection.DataAmount = '';
-        // this.weatherDateCollection.DataCollectedTime = '';
-        // this.weatherDateCollection.RamUsage = '';
-        // this.weatherDateCollection.ConvertionCpuUsage =0;
-        // this.weatherDateCollection.ConvertionRamUsage ="";
-        // this.weatherDateCollection.ConvertionTimer ="";
         this.fromIndex = 0;
         this.toIndex = 0;
         this.totalDataPoints = 0;

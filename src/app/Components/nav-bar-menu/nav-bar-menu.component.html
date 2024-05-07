@@ -70,6 +70,7 @@
                     (input)="onInput($event)"
                     placeholder="søg..."
                     (change)="onOptionSelected($event.target.value)"
+                    (input)="DisableLocationsInput($event.target.value)"
                   />
                   <datalist id="optionsList">
                     <option
@@ -224,6 +225,9 @@
                   [formGroup]="inputForm"
                   placeholder="5"
                   formControlName="numChunks"
+                  max ="100"
+                  (input)="onInputChange($event)"
+
                 />
               </div>
 
